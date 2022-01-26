@@ -42,6 +42,8 @@ SCOPE DebutService
 	QUAND le service débute
 	ALORS il n'est pas possible de modifier le serveur affecté à la table
 
+
+	// comprend pas
 	ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
 	ET ayant débuté son service
 	QUAND le service se termine

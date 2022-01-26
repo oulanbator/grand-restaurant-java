@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package epsi.tdd.grandrestaurant;
+package epsi.tdd.grandrestaurant.services;
 
-/**
- *
- * @author victo
- */
+import java.util.function.BooleanSupplier;
+
+import com.fasterxml.jackson.databind.node.BooleanNode;
+
 public class Serveur {
+    private boolean maitreHotel;
+
+    public boolean isMaitreHotel() {
+        return maitreHotel;
+    }
+
+    public void setMaitreHotel(boolean b) {
+        this.maitreHotel = b; 
+    }
     
 }

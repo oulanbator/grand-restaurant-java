@@ -1,0 +1,18 @@
+package epsi.tdd.grandrestaurant.services;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+public class ServeurTest {
+    
+
+}
+
+
+
+
+// ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
+// QUAND le service débute
+// ALORS la table éditée est affectée au serveur et les deux autres au maître d'hôtel

@@ -1,9 +1,9 @@
-#SUJET
+# SUJET
 
 Une chaîne de restaurants souhaite informatiser ses salles.
 
 Elles fonctionnent toutes de la même manière : un serveur est affecté à un 
-certain nombre de tables par le maître d’hôtel en début de service. 
+certain nombre de tables par le maître d’hôtel en début de service.
 Il les gère de bout en bout le temps d’un service.
 
 Lorsqu’un client entre, il est installé à une table libre par l’hôtesse.
@@ -30,8 +30,15 @@ après 15 jours sous forme d’un imprimé.
 Le siège de la franchise doit pouvoir générer un rapport quotidien des impayés 
 et du chiffre d’affaire à 3 niveaux : franchise, restaurant, serveur.
 
+# Documentation générale sur les tests en java
+> http://sdz.tdct.org/sdz/les-tests-unitaires-en-java.html
+> MockWebServer (lib de test client HTTP) : https://blog.ippon.fr/2021/11/05/mockwebserver/
 
-# Choix framework d'assertion
-JUnit
-Hamcrest ?
-AssertJ ?
+# Choix framework d'assertion (3 à essayer dans 3 branches différentes)
+> JUnit : 
+https://www.guru99.com/junit-assert.html#:~:text=What%20is%20Junit%20Assert%3F%20Assert%20is%20a%20method,types%20of%20assertions%20like%20Boolean%2C%20Null%2C%20Identical%20etc.
+
+> AssertJ :
+
+> JSpec : https://www.codeflow.site/fr/article/jspec
+(Vulnérabilités sur cette dépendance)
