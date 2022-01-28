@@ -6,6 +6,7 @@
     	QUAND on récupére son chiffre d'affaires
     	ALORS celui-ci est à 0
 
+        // *** Intégré
     	ÉTANT DONNÉ un nouveau serveur
     	QUAND il prend une commande
     	ALORS son chiffre d'affaires est le montant de celle-ci
@@ -45,7 +46,7 @@
     ALORS il n'est pas possible de modifier le serveur affecté à la table
 
 
-    // comprend pas
+    // comprend pas ce use case
     ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
     ET ayant débuté son service
     QUAND le service se termine

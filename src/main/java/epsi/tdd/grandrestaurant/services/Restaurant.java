@@ -72,7 +72,7 @@ public class Restaurant {
         return this.tachesCuisine;
     }
 
-    public void newCommandeNourriture(Commande commande) {
+    public void addCommandeNourriture(Commande commande) {
         this.tachesCuisine.add(commande);
     }
 

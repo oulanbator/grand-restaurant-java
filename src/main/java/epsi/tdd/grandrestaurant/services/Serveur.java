@@ -1,27 +1,37 @@
 package epsi.tdd.grandrestaurant.services;
 
+import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class Serveur {
     private Restaurant restaurant;
     private boolean isMaitreHotel;
-    private float chiffreAffaires;
-
-    
+    private double chiffreAffaires;
 
     public Serveur() {
         this.isMaitreHotel = false;
         this.chiffreAffaires = 0;
     }
 
-    public Commande prendreCommandeNourriture() {
-        Commande commande = new Commande();
-        restaurant.newCommandeNourriture(commande);
-        return commande;
+    public void prendreCommande(Commande commande) {
+        // Associe la table à la commande ???
+
+        // traitement de la commande selon le type de commande
+        TypeCommande type = commande.getTypeCommande();
+        if (type == TypeCommande.NOURRITURE) {
+            prendreCommandeNourriture(commande);
+
+        } else if (type == TypeCommande.BOISSONS) {
+            prendreCommandeBoissons(commande);
+        }
+        // Ajout du montant de la commande au chiffre d'affaires
+        this.chiffreAffaires += commande.getMontant();
+    } 
+
+    private void prendreCommandeNourriture(Commande commande) {
+        restaurant.addCommandeNourriture(commande);
     }
 
-    public Commande prendreCommandeBoissons() {
-        Commande commande = new Commande();
-        return commande;
+    private void prendreCommandeBoissons(Commande commande) {
     }
 
     // GETTERS & SETTERS
@@ -38,8 +48,8 @@ public class Serveur {
         this.restaurant = restaurant;
     }
 
-    public float getChiffreAffaires() {
+    public double getChiffreAffaires() {
         return this.chiffreAffaires;
-    } 
+    }
     
 }

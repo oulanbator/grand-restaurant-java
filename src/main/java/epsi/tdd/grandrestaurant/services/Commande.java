@@ -5,8 +5,13 @@ import epsi.tdd.grandrestaurant.model.TypeCommande;
 public class Commande {
     TypeCommande typeCommande;
     Table table;
+    double montant;
     
     public Commande() {
+    }
+    
+    public Commande(TypeCommande type) {
+        this.typeCommande = type;
     }
 
     // GETTERS & SETTERS
@@ -25,6 +30,14 @@ public class Commande {
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(double montant) {
+        this.montant = montant;
     }
 
     

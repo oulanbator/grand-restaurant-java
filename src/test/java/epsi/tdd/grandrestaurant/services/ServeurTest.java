@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import epsi.tdd.grandrestaurant.model.TypeCommande;
+
 public class ServeurTest {
     
     /**
@@ -22,7 +24,8 @@ public class ServeurTest {
         Serveur serveur = restaurant.addNewServeur();
 
         // QUAND il prend une commande de nourriture
-        Commande commande = serveur.prendreCommandeNourriture();
+        Commande commande = new Commande(TypeCommande.NOURRITURE);
+        serveur.prendreCommande(commande);
 
         // ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
@@ -41,7 +44,8 @@ public class ServeurTest {
         Serveur serveur = restaurant.addNewServeur();
 
         // QUAND il prend une commande de boissons
-        Commande commande = serveur.prendreCommandeBoissons();
+        Commande commande = new Commande(TypeCommande.BOISSONS);
+        serveur.prendreCommande(commande);
         
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
@@ -59,10 +63,31 @@ public class ServeurTest {
         Serveur serveur = new Serveur();
 
     	// QUAND on récupére son chiffre d'affaires
-        float result = serveur.getChiffreAffaires();
+        double result = serveur.getChiffreAffaires();
 
     	// ALORS celui-ci est à 0
-        float expected = 0F;
+        double expected = 0F;
+        assertEquals(expected, result);
+    }
+
+    /**
+     * ÉTANT DONNÉ un nouveau serveur
+     * QUAND il prend une commande
+     * ALORS son chiffre d'affaires est le montant de celle-ci
+     */
+    @Test
+    public void chiffreAffairesApresCommande() {
+        // ÉTANT DONNÉ un nouveau serveur
+        Serveur serveur = new Serveur();
+    	
+        // QUAND il prend une commande
+        Commande commande = new Commande();
+        commande.setMontant(Math.random() * 100); // set montant aléatoire entre 0 et 100
+        serveur.prendreCommande(commande);
+
+    	// ALORS son chiffre d'affaires est le montant de celle-ci
+        double result = serveur.getChiffreAffaires();
+        double expected = commande.getMontant();
         assertEquals(expected, result);
     }
 }
