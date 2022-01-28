@@ -6,28 +6,54 @@ import java.util.List;
 public class Restaurant {
     private List<Table> tables = new ArrayList<>();
     private Serveur maitreHotel;
+    private List<Serveur> serveurs = new ArrayList<>();
+
+    public Restaurant() {
+        creerMaitreHotel();
+    }
+
+    private void creerMaitreHotel() {
+        // Crée maitre d'hôtel
+        Serveur serveur = new Serveur();
+        serveur.setMaitreHotel(true);
+        this.maitreHotel = serveur;
+    }
 
     public void createTables(int nbTables) {
-        for (int i = 0 ; i < nbTables ; i++) {
+        for (int i = 0; i < nbTables; i++) {
             Table newTable = new Table();
             tables.add(newTable);
         }
     }
 
     public void startService() {
-        // Crée maitre d'hôtel
-        Serveur serveur = new Serveur();
-        serveur.setMaitreHotel(true);
-        this.maitreHotel = serveur;
-
         // Affecte tables au maitre d'hôtel
         for (Table table : tables) {
-            table.setServeur(maitreHotel);
+            if (table.getServeur() == null) {
+                table.setServeur(maitreHotel);
+            }
         }
     }
 
     public List<Table> getTables() {
         return this.tables;
     }
-    
+
+    public Serveur addNewServeur() {
+        Serveur serveur = new Serveur();
+        this.serveurs.add(serveur);
+        return serveur;
+    }
+
+    // public void creerServeurs(int nbServeurs) {
+    // }
+
+    public List<Serveur> getServeurs() {
+        return this.serveurs;
+    }
+
+    public Serveur getMaitre() {
+        return this.maitreHotel;
+    }
+
 }
