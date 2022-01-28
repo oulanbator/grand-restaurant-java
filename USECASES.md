@@ -29,11 +29,12 @@ SCOPE Chiffre d'Affaires
     	CAS(Z = 1.0)
 
 SCOPE DebutService
-    // **_ Intégré
+    // *** Intégré
     ÉTANT DONNE un restaurant ayant 3 tables
     QUAND le service commence
     ALORS elles sont toutes affectées au Maître d'Hôtel
-    // _** Intégré
+
+    // *** Intégré
     ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
     QUAND le service débute
     ALORS la table éditée est affectée au serveur et les deux autres au maître d'hôtel
@@ -68,10 +69,12 @@ SCOPE Epinglage
     ALORS elle ne figure plus dans la liste des commandes à transmettre du restaurant
 
 SCOPE Installation
+    // *** Intégré
     ÉTANT DONNE une table dans un restaurant ayant débuté son service
     QUAND un client est affecté à une table
     ALORS cette table n'est plus sur la liste des tables libres du restaurant
 
+    // *** Intégré
     ÉTANT DONNE une table occupée par un client
     QUAND la table est libérée
     ALORS cette table appraît sur la liste des tables libres du restaurant

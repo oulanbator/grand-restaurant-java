@@ -15,12 +15,16 @@ public class Table {
         this.serveurAffecte = serveur;
     }
 
-    public void affecteClient(Client client) {
+    public void affecterClient(Client client) {
         this.clients.add(client);
     }
 
     public List<Client> getClients() {
         return this.clients;
+    }
+
+    public void liberer() {
+        this.clients.clear();
     }
     
 }
