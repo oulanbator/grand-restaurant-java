@@ -29,14 +29,14 @@ SCOPE Chiffre d'Affaires
     	CAS(Z = 1.0)
 
 SCOPE DebutService
-// **_ Intégré
-ÉTANT DONNE un restaurant ayant 3 tables
-QUAND le service commence
-ALORS elles sont toutes affectées au Maître d'Hôtel
-// _** Intégré
-ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
-QUAND le service débute
-ALORS la table éditée est affectée au serveur et les deux autres au maître d'hôtel
+    // **_ Intégré
+    ÉTANT DONNE un restaurant ayant 3 tables
+    QUAND le service commence
+    ALORS elles sont toutes affectées au Maître d'Hôtel
+    // _** Intégré
+    ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
+    QUAND le service débute
+    ALORS la table éditée est affectée au serveur et les deux autres au maître d'hôtel
 
     ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
     QUAND le service débute
@@ -51,9 +51,9 @@ ALORS la table éditée est affectée au serveur et les deux autres au maître d
     ALORS la table éditée est affectée au serveur et les deux autres au maître d'hôtel
 
 SCOPE Epinglage
-ÉTANT DONNE un serveur ayant pris une commande
-QUAND il la déclare comme non-payée
-ALORS cette commande est marquée comme épinglée
+    ÉTANT DONNE un serveur ayant pris une commande
+    QUAND il la déclare comme non-payée
+    ALORS cette commande est marquée comme épinglée
 
     ÉTANT DONNE un serveur ayant épinglé une commande
     QUAND elle date d'il y a au moins 15 jours
@@ -68,19 +68,19 @@ ALORS cette commande est marquée comme épinglée
     ALORS elle ne figure plus dans la liste des commandes à transmettre du restaurant
 
 SCOPE Installation
-ÉTANT DONNE une table dans un restaurant ayant débuté son service
-QUAND un client est affecté à une table
-ALORS cette table n'est plus sur la liste des tables libres du restaurant
+    ÉTANT DONNE une table dans un restaurant ayant débuté son service
+    QUAND un client est affecté à une table
+    ALORS cette table n'est plus sur la liste des tables libres du restaurant
 
     ÉTANT DONNE une table occupée par un client
     QUAND la table est libérée
     ALORS cette table appraît sur la liste des tables libres du restaurant
 
 SCOPE Menus
-ÉTANT DONNE un restaurant ayant le statut de filiale d'une franchise
-ET une franchise définissant un menu ayant un plat
-QUAND la franchise modifie le prix du plat
-ALORS le prix du plat dans le menu du restaurant est celui défini par la franchise
+    ÉTANT DONNE un restaurant ayant le statut de filiale d'une franchise
+    ET une franchise définissant un menu ayant un plat
+    QUAND la franchise modifie le prix du plat
+    ALORS le prix du plat dans le menu du restaurant est celui défini par la franchise
 
     ÉTANT DONNE un restaurant appartenant à une franchise et définissant un menu ayant un plat
     ET une franchise définissant un menu ayant le même plat
@@ -92,9 +92,9 @@ ALORS le prix du plat dans le menu du restaurant est celui défini par la franch
     ALORS la carte du restaurant propose le premier plat au prix du restaurant et le second au prix de la franchise
 
 SCOPE Commande
-ÉTANT DONNE un serveur dans un restaurant
-QUAND il prend une commande de nourriture
-ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant
+    ÉTANT DONNE un serveur dans un restaurant
+    QUAND il prend une commande de nourriture
+    ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant
 
     ÉTANT DONNE un serveur dans un restaurant
     QUAND il prend une commande de boissons

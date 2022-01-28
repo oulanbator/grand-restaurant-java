@@ -52,8 +52,18 @@ public class Restaurant {
         return this.serveurs;
     }
 
-    public Serveur getMaitre() {
+    public Serveur getMaitreHotel() {
         return this.maitreHotel;
+    }
+
+    public List<Table> getTablesLibres() {
+        List<Table> tablesLibres = new ArrayList<>();
+        for (Table table : this.tables) {
+            if (table.getClients().size() == 0) {
+                tablesLibres.add(table);
+            }
+        }
+        return tablesLibres;
     }
 
 }

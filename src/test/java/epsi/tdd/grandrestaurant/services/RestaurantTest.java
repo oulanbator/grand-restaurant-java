@@ -1,10 +1,7 @@
 package epsi.tdd.grandrestaurant.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +19,7 @@ public class RestaurantTest {
         restaurant.startService();
 
         for (Table table : restaurant.getTables()) {
-            // assertTrue(table.getServeur().isMaitreHotel());
-            // assertThat(table.getServeur().isMaitreHotel())
-            assertThat(table.getServeur().isMaitreHotel()).isTrue();
+            assertTrue(table.getServeur().isMaitreHotel());
         }
     }
 
@@ -36,21 +31,29 @@ public class RestaurantTest {
      */
     @Test
     public void affecteTableServeur() {
+        // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
         Restaurant restaurant = new Restaurant();
         restaurant.createTables(3);
-
+        // creer serveur et affecte table 
         Serveur serveur = restaurant.addNewServeur();
-        int indexTable = 0;
-        Table table = restaurant.getTables().get(indexTable);
+        int indexTableServeur = 0;
+        Table table = restaurant.getTables().get(indexTableServeur);
         table.setServeur(serveur);
 
+        // QUAND le service débute
         restaurant.startService();
 
+        // ALORS la table éditée est affectée au serveur et les deux autres au maître
+        // Boucle sur les tables
         for (int i = 0; i < restaurant.getTables().size(); i++) {
-            if (i == indexTable) {
-                assertThat(restaurant.getTables().get(i).getServeur()).isEqualTo(serveur);
+            // Recupère le serveur de la table
+            Serveur result = restaurant.getTables().get(i).getServeur();
+            if (i == indexTableServeur) {
+                Serveur expected = serveur;
+                assertEquals(expected, result);
             } else {
-                assertThat(restaurant.getTables().get(i).getServeur()).isEqualTo(restaurant.getMaitre());
+                Serveur expected = restaurant.getMaitreHotel();
+                assertEquals(expected, result);
             }
         }
     }
@@ -60,6 +63,5 @@ public class RestaurantTest {
      * QUAND le service débute
      * ALORS il n'est pas possible de modifier le serveur affecté à la table
      */
-    //@Test
 
 }

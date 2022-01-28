@@ -1,8 +1,5 @@
 package epsi.tdd.grandrestaurant.services;
 
-import java.util.function.BooleanSupplier;
-
-import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Serveur {
     private boolean maitreHotel;
@@ -11,8 +8,8 @@ public class Serveur {
         return maitreHotel;
     }
 
-    public void setMaitreHotel(boolean b) {
-        this.maitreHotel = b; 
+    public void setMaitreHotel(boolean isMaitreHotel) {
+        this.maitreHotel = isMaitreHotel; 
     }
     
 }
