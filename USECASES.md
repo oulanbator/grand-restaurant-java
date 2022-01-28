@@ -95,6 +95,7 @@ SCOPE Menus
     ALORS la carte du restaurant propose le premier plat au prix du restaurant et le second au prix de la franchise
 
 SCOPE Commande
+    // *** Intégré
     ÉTANT DONNE un serveur dans un restaurant
     QUAND il prend une commande de nourriture
     ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant
