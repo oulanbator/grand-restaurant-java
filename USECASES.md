@@ -1,6 +1,7 @@
 ## SCOPE Chiffre d'Affaires
 
     SCOPE Serveur
+        // *** Intégré
     	ÉTANT DONNÉ un nouveau serveur
     	QUAND on récupére son chiffre d'affaires
     	ALORS celui-ci est à 0
@@ -106,14 +107,14 @@
     ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant
 
 
-
-### BONUS : usecase retrouvé dans dans l'ancien projet, absents des usecases actuels (à garder ?)
+# ---- BONUS -------------------------------------------------------------------------------------
+### Usecase retrouvé dans dans l'ancien projet, absents des usecases actuels (à garder ?)
 
 ÉTANT DONNE une table occupée par un client
 QUAND on veut installer un client
 ALORS une exception est lancée
 
-## Ce qu'on peut transformer en nouveaux usecases dans la consigne (j'ai l'impression que c'est pas intégré mais n'hésitez pas à me donner votre avis)
+### Ce qu'on peut transformer en nouveaux usecases dans la consigne (j'ai l'impression que c'est pas intégré mais n'hésitez pas à me donner votre avis)
 
 //  (je remets ça ici car il y a la notion de "installé PAR le maître d'hotel" qui n'est pas vraiment intégrée) 
 > un serveur est affecté à un certain nombre de tables par le maître d’hôtel en début de service.

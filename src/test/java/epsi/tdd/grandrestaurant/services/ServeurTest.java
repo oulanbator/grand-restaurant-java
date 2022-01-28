@@ -1,5 +1,6 @@
 package epsi.tdd.grandrestaurant.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,5 +46,23 @@ public class ServeurTest {
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
         assertFalse(tachesCuisine.contains(commande));
+    }
+
+    /**
+     * ÉTANT DONNÉ un nouveau serveur
+     * QUAND on récupére son chiffre d'affaires
+     * ALORS celui-ci est à 0
+     */
+    @Test
+    public void chiffreAffairesNouveauServeur() {
+        // ÉTANT DONNÉ un nouveau serveur
+        Serveur serveur = new Serveur();
+
+    	// QUAND on récupére son chiffre d'affaires
+        float result = serveur.getChiffreAffaires();
+
+    	// ALORS celui-ci est à 0
+        float expected = 0F;
+        assertEquals(expected, result);
     }
 }

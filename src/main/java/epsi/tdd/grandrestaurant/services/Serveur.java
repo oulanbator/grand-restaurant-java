@@ -4,6 +4,14 @@ package epsi.tdd.grandrestaurant.services;
 public class Serveur {
     private Restaurant restaurant;
     private boolean isMaitreHotel;
+    private float chiffreAffaires;
+
+    
+
+    public Serveur() {
+        this.isMaitreHotel = false;
+        this.chiffreAffaires = 0;
+    }
 
     public Commande prendreCommandeNourriture() {
         Commande commande = new Commande();
@@ -28,6 +36,10 @@ public class Serveur {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public float getChiffreAffaires() {
+        return this.chiffreAffaires;
     } 
     
 }
