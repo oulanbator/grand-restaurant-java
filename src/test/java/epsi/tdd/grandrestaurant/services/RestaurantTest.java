@@ -2,6 +2,7 @@ package epsi.tdd.grandrestaurant.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ public class RestaurantTest {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
         Restaurant restaurant = new Restaurant();
         restaurant.createTables(3);
-        // creer serveur et affecte table 
+        // creer serveur et affecte table
         Serveur serveur = restaurant.addNewServeur();
         int indexTableServeur = 0;
         Table table = restaurant.getTables().get(indexTableServeur);
@@ -63,5 +64,23 @@ public class RestaurantTest {
      * QUAND le service débute
      * ALORS il n'est pas possible de modifier le serveur affecté à la table
      */
+    @Test
+    public void modifieAffectation() {
+        // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
+        Restaurant restaurant = new Restaurant();
+        restaurant.createTables(3);
+        Serveur serveur = restaurant.addNewServeur();
+        int indexTable = 0;
+        Table table = restaurant.getTables().get(indexTable);
+        table.setServeur(serveur);
+
+        // QUAND le service débute
+        restaurant.startService();
+
+        // ALORS il n'est pas possible de modifier le serveur affecté à la table
+        assertFalse(Restaurant.retirerTableServeur(table, serveur));
+        // Cannot make a static reference to the non-static method retirerTableServeur(Table, Serveur) from the type Restaurant
+        // Je ne comprends pas
+    }
 
 }

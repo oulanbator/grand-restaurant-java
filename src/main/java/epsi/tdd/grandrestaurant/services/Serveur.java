@@ -1,11 +1,14 @@
 package epsi.tdd.grandrestaurant.services;
 
 import epsi.tdd.grandrestaurant.model.TypeCommande;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Serveur {
     private Restaurant restaurant;
     private boolean isMaitreHotel;
     private double chiffreAffaires;
+    private List<Table> tables = new ArrayList<>();
 
     public Serveur() {
         this.isMaitreHotel = false;
@@ -25,7 +28,7 @@ public class Serveur {
         }
         // Ajout du montant de la commande au chiffre d'affaires
         this.chiffreAffaires += commande.getMontant();
-    } 
+    }
 
     private void prendreCommandeNourriture(Commande commande) {
         restaurant.addCommandeNourriture(commande);
@@ -41,7 +44,7 @@ public class Serveur {
     }
 
     public void setMaitreHotel(boolean isMaitreHotel) {
-        this.isMaitreHotel = isMaitreHotel; 
+        this.isMaitreHotel = isMaitreHotel;
     }
 
     public void setRestaurant(Restaurant restaurant) {
@@ -51,5 +54,11 @@ public class Serveur {
     public double getChiffreAffaires() {
         return this.chiffreAffaires;
     }
-    
+
+    public Table retirerTable(Table table) {
+        int nIndex = this.tables.indexOf(table);
+        Table t = this.tables.remove(nIndex);
+        return t;
+    }
+
 }
