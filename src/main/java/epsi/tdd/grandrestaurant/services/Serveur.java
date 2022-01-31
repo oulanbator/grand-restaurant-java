@@ -1,14 +1,11 @@
 package epsi.tdd.grandrestaurant.services;
 
 import epsi.tdd.grandrestaurant.model.TypeCommande;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Serveur {
     private Restaurant restaurant;
     private boolean isMaitreHotel;
     private double chiffreAffaires;
-    private List<Table> tables = new ArrayList<>();
 
     public Serveur() {
         this.isMaitreHotel = false;
@@ -53,12 +50,6 @@ public class Serveur {
 
     public double getChiffreAffaires() {
         return this.chiffreAffaires;
-    }
-
-    public Table retirerTable(Table table) {
-        int nIndex = this.tables.indexOf(table);
-        Table t = this.tables.remove(nIndex);
-        return t;
     }
 
 }

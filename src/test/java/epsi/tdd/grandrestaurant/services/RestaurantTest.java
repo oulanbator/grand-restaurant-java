@@ -2,6 +2,10 @@ package epsi.tdd.grandrestaurant.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import org.hibernate.annotations.SourceType;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
@@ -38,9 +42,11 @@ public class RestaurantTest {
         // creer serveur et affecte table
         Serveur serveur = restaurant.addNewServeur();
         int indexTableServeur = 0;
-        Table table = restaurant.getTables().get(indexTableServeur);
-        table.setServeur(serveur);
-
+        /*
+         * Table table = restaurant.getTables().get(indexTableServeur);
+         * table.setServeur(serveur);
+         */
+        restaurant.affecterServeurTable(indexTableServeur, serveur);
         // QUAND le service débute
         restaurant.startService();
 
@@ -69,18 +75,98 @@ public class RestaurantTest {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
         Restaurant restaurant = new Restaurant();
         restaurant.createTables(3);
-        Serveur serveur = restaurant.addNewServeur();
+        /* Serveur serveur = restaurant.addNewServeur(); */
+        Serveur serveur = mock(Serveur.class);
+
         int indexTable = 0;
-        Table table = restaurant.getTables().get(indexTable);
-        table.setServeur(serveur);
+        restaurant.affecterServeurTable(indexTable, serveur);
 
         // QUAND le service débute
         restaurant.startService();
 
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
-        assertFalse(Restaurant.retirerTableServeur(table, serveur));
-        // Cannot make a static reference to the non-static method retirerTableServeur(Table, Serveur) from the type Restaurant
-        // Je ne comprends pas
+        Serveur serveurDummy = mock(Serveur.class);
+
+        assertFalse(restaurant.affecterServeurTable(indexTable, serveurDummy));
+    }
+
+    /**
+     * ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
+     * ET ayant débuté son service
+     * QUAND le service se termine
+     * ET qu'une table est affectée à un serveur
+     * ALORS la table éditée est affectée au serveur et les deux autres au maître
+     * d'hôtel
+     */
+    @Test
+    public void finDeService() {
+        // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
+        Restaurant restaurant = new Restaurant();
+        restaurant.createTables(3);
+        Serveur serveur = restaurant.addNewServeur();
+        int indexTableServeur = 0;
+        restaurant.affecterServeurTable(indexTableServeur, serveur);
+
+        // ET ayant débuté son service
+        restaurant.startService();
+
+        // QUAND le service se termine
+        restaurant.stopService();
+
+        // ET qu'une table est affectée à un serveur
+        // TODO : Peut être à revoir sur la définition de ce test
+        restaurant.affecterServeurTable(indexTableServeur, serveur);
+
+        // ALORS la table éditée est affectée au serveur et les deux autres au maître
+        // d'hôtel
+        for (int i = 0; i < restaurant.getTables().size(); i++) {
+            // Récupère le serveur de la table
+            Serveur result = restaurant.getTables().get(i).getServeur();
+            if (i == indexTableServeur) {
+                Serveur expected = serveur;
+                assertEquals(expected, result);
+            } else {
+                Serveur expected = restaurant.getMaitreHotel();
+                assertEquals(expected, result);
+            }
+        }
+    }
+
+    /**
+     * ÉTANT DONNÉ un restaurant ayant X serveurs
+     * QUAND tous les serveurs prennent une commande d'un montant Y
+     * ALORS le chiffre d'affaires de la franchise est X * Y
+     * CAS(X = 0; X = 1; X = 2; X = 100)
+     * CAS(Y = 1.0)
+     */
+    @Test
+    public void chiffreAffaireFranchise() {
+        // ÉTANT DONNÉ un restaurant ayant X serveurs
+        Franchise franchise = new Franchise();
+        Restaurant restaurant = franchise.newRestaurant();
+        int X = 0;
+        // TODO : Tester les modifications de la variable X avec frameWork d'assertion
+        for (int i = 0; i < X; i++) {
+            restaurant.addNewServeur();
+        }
+        System.out.println(restaurant.getServeurs().size());
+
+        // QUAND tous les serveurs prennent une commande d'un montant Y
+        // TODO : Faire un constructeur avec montant de la commande
+        Commande commande = new Commande();
+        double Y = 1;
+        commande.setMontant(Y);
+
+        for (Serveur serveur : restaurant.getServeurs()) {
+            serveur.prendreCommande(commande);
+        }
+        // ALORS le chiffre d'affaires de la franchise est X * Y
+        double result = franchise.getChiffreAffaire();
+        double expected = restaurant.getServeurs().size() * Y;
+
+        assertEquals(expected, result);
+        // CAS(X = 0; X = 1; X = 2; X = 100)
+        // CAS(Y = 1.0)
     }
 
 }

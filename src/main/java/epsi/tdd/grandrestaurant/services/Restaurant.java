@@ -8,7 +8,7 @@ public class Restaurant {
     private List<Table> tables = new ArrayList<>();
     private List<Serveur> serveurs = new ArrayList<>();
     private List<Commande> tachesCuisine = new ArrayList<>();
-    private boolean serviceCommence = false;
+    private boolean serviceEnCours = false;
 
     public Restaurant() {
         creerMaitreHotel();
@@ -35,6 +35,12 @@ public class Restaurant {
                 table.setServeur(maitreHotel);
             }
         }
+        serviceEnCours = true;
+    }
+
+    public void stopService() {
+        //
+        serviceEnCours = false;
     }
 
     public List<Table> getTables() {
@@ -77,11 +83,12 @@ public class Restaurant {
         this.tachesCuisine.add(commande);
     }
 
-    public boolean retirerTableServeur(Table table, Serveur serveur) {
-        if (!serviceCommence) {
-            this.tables.add(serveur.retirerTable(table));
+    public boolean affecterServeurTable(int indexTable, Serveur serveur) {
+        Table table = tables.get(indexTable);
+        if (serviceEnCours) {
             return false;
         } else {
+            table.setServeur(serveur);
             return true;
         }
     }
