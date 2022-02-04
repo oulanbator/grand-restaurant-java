@@ -8,6 +8,7 @@ public class Restaurant {
     private List<Table> tables = new ArrayList<>();
     private List<Serveur> serveurs = new ArrayList<>();
     private List<Commande> tachesCuisine = new ArrayList<>();
+    private List<Commande> aTansmettre = new ArrayList<>();
     private boolean serviceEnCours = false;
 
     public Restaurant() {
@@ -81,6 +82,18 @@ public class Restaurant {
 
     public void addCommandeNourriture(Commande commande) {
         this.tachesCuisine.add(commande);
+    }
+
+    public void addCommandeTransmettre(Commande commande) {
+        this.aTansmettre.add(commande);
+    }
+
+    public List<Commande> getaTansmettre() {
+        return aTansmettre;
+    }
+
+    public void setaTansmettre(List<Commande> aTansmettre) {
+        this.aTansmettre = aTansmettre;
     }
 
     public boolean affecterServeurTable(int indexTable, Serveur serveur) {

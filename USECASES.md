@@ -58,14 +58,17 @@
 
 ## SCOPE Epinglage
 
+    // *** Intégré
     ÉTANT DONNE un serveur ayant pris une commande
     QUAND il la déclare comme non-payée
     ALORS cette commande est marquée comme épinglée
 
+    // *** Intégré
     ÉTANT DONNE un serveur ayant épinglé une commande
     QUAND elle date d'il y a au moins 15 jours
     ALORS cette commande est marquée comme à transmettre gendarmerie
 
+    // *** Intégré
     ÉTANT DONNE une commande à transmettre gendarmerie
     QUAND on consulte la liste des commandes à transmettre du restaurant
     ALORS elle y figure

@@ -1,5 +1,6 @@
 package epsi.tdd.grandrestaurant.services;
 
+import java.util.Calendar;
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class Serveur {
@@ -50,6 +51,17 @@ public class Serveur {
 
     public double getChiffreAffaires() {
         return this.chiffreAffaires;
+    }
+
+    public void commandeIsPaid(Commande commande, boolean b) {
+
+        boolean isEpinglee = b ? false : true;
+        // Epinglage de la commande (ou non)
+        commande.setEpinglee(isEpinglee);
+        if (isEpinglee) {
+            Calendar calendar = Calendar.getInstance();
+            commande.setDateEpinglage(calendar.getTime());
+        }
     }
 
 }
