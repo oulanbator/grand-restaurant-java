@@ -14,6 +14,7 @@ public class Serveur {
     }
 
     public void prendreCommande(Commande commande) {
+        restaurant.addCommande(commande);
         // Associe la table à la commande ???
 
         // traitement de la commande selon le type de commande
@@ -35,6 +36,15 @@ public class Serveur {
     private void prendreCommandeBoissons(Commande commande) {
     }
 
+    public void commandeIsPaid(Commande commande, boolean estPaye) {
+        // Epinglage de la commande (ou non)
+        if (!estPaye) {
+            commande.setEpinglee(true);
+            Calendar calendar = Calendar.getInstance();
+            commande.setDateEpinglage(calendar.getTime());
+        }
+    }
+
     // GETTERS & SETTERS
 
     public boolean isMaitreHotel() {
@@ -51,17 +61,6 @@ public class Serveur {
 
     public double getChiffreAffaires() {
         return this.chiffreAffaires;
-    }
-
-    public void commandeIsPaid(Commande commande, boolean b) {
-
-        boolean isEpinglee = b ? false : true;
-        // Epinglage de la commande (ou non)
-        commande.setEpinglee(isEpinglee);
-        if (isEpinglee) {
-            Calendar calendar = Calendar.getInstance();
-            commande.setDateEpinglage(calendar.getTime());
-        }
     }
 
 }

@@ -1,7 +1,9 @@
 package epsi.tdd.grandrestaurant.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +12,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.SourceType;
 import org.junit.jupiter.api.Test;
+
+import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class CommandeTest {
     /**
@@ -41,25 +46,20 @@ public class CommandeTest {
     @Test
     public void transmissionGendarmerie() throws ParseException {
         // ÉTANT DONNE un serveur ayant épinglé une commande
-        Serveur serveur = new Serveur();
+        Restaurant restaurant = new Restaurant();
+        Serveur serveur = restaurant.addNewServeur();
         Commande commande = new Commande();
-
+        serveur.prendreCommande(commande);
         serveur.commandeIsPaid(commande, false); // Epingle la commande si inpayé(false)
 
         // QUAND elle date d'il y a au moins 15 jours
-        Calendar cLimiteCalendar = Calendar.getInstance();
-
-        // Date dEpinglage = commande.getDateEpinglage();
-        String dateInString = "10012022"; // Initialisation date de test de la commande
-        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
-        Date dEpinglage = formatter.parse(dateInString);
-
-        cLimiteCalendar.getTime();
-        cLimiteCalendar.add(Calendar.DATE, -15); // Calculer la date limite (15 jours)
-        Date dLimite = cLimiteCalendar.getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -15); // Calculer la date limite (15 jours)
+        commande.setDateEpinglage(calendar.getTime());
 
         // ALORS cette commande est marquée comme à transmettre gendarmerie
-        assertTrue(commande.setVersGendarmerie = dEpinglage.compareTo(dLimite) < 0 ? true : false);
+        restaurant.transmettreCommandesGendarmerie();
+        assertTrue(commande.isVersGendarmerie() == true);
     }
 
     /**
@@ -68,26 +68,49 @@ public class CommandeTest {
      * ALORS elle y figure
      */
     @Test
-    public void listeaTransmettre() {
+    public void listeATransmettre() {
         // ÉTANT DONNE une commande à transmettre gendarmerie
         Restaurant chezGaston = new Restaurant();
-        Commande commandeATransmettre = new Commande();
+        Commande commandeATransmettre = mock(Commande.class);
         chezGaston.addCommandeTransmettre(commandeATransmettre);
-        commandeATransmettre.setVersGendarmerie = true;
+        commandeATransmettre.setVersGendarmerie(true);
 
         // QUAND on consulte la liste des commandes à transmettre du restaurant
-        List<Commande> ListeCommande = new ArrayList<>();
-        ListeCommande = chezGaston.getaTansmettre();
-
+        List<Commande> listeCommandes = chezGaston.getaTansmettre();
+        
         // ALORS elle y figure
         // Boucle sur les commandes
-        for (int i = 0; i > ListeCommande.size(); i++) {
-            // Récupère la commande à transmettre
-            Commande result = chezGaston.getaTansmettre().get(i);
-            if (result == commandeATransmettre) {
-                assertEquals(commandeATransmettre, result);
-            }
-        }
+        assertTrue(listeCommandes.contains(commandeATransmettre));
+    }
+
+    /**
+     * ÉTANT DONNE une commande à transmettre gendarmerie
+     * QUAND elle est marquée comme transmise à la gendarmerie
+     * ALORS elle ne figure plus dans la liste des commandes à transmettre du
+     * restaurant
+     */
+    @Test
+    public void transmiseGendarmerie() {
+        // ÉTANT DONNE une commande à transmettre gendarmerie
+        Restaurant chezGaston = new Restaurant();
+        Commande commande = new Commande();
+        chezGaston.addCommandeTransmettre(commande);
+        commande.setVersGendarmerie(true);
+
+        // QUAND elle est marquée comme transmise à la gendarmerie
+        commande.bTransmise = true;
+
+        // ALORS elle ne figure plus dans la liste des commandes à transmettre du
+        // restaurant
+        assertFalse(chezGaston.getaTansmettre().contains(commande));
+        // List<Commande> ListeCommande = new ArrayList<>();
+        // for (int i = 0; i > ListeCommande.size(); i++) {
+        //     //
+        //     Commande result = chezGaston.getaTansmettre().get(i);
+        //     if (result == commande) {
+        //         assertEquals(commande, result);
+        //     }
+        // }
 
     }
 }
