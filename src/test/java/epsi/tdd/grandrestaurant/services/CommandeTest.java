@@ -1,21 +1,14 @@
 package epsi.tdd.grandrestaurant.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import org.hibernate.annotations.SourceType;
 import org.junit.jupiter.api.Test;
-
-import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class CommandeTest {
     /**
@@ -77,7 +70,7 @@ public class CommandeTest {
 
         // QUAND on consulte la liste des commandes à transmettre du restaurant
         List<Commande> listeCommandes = chezGaston.getaTansmettre();
-        
+
         // ALORS elle y figure
         // Boucle sur les commandes
         assertTrue(listeCommandes.contains(commandeATransmettre));
@@ -93,24 +86,16 @@ public class CommandeTest {
     public void transmiseGendarmerie() {
         // ÉTANT DONNE une commande à transmettre gendarmerie
         Restaurant chezGaston = new Restaurant();
-        Commande commande = new Commande();
+        Commande commande = mock(Commande.class);
         chezGaston.addCommandeTransmettre(commande);
         commande.setVersGendarmerie(true);
 
         // QUAND elle est marquée comme transmise à la gendarmerie
-        commande.bTransmise = true;
+        commande.setbTransmise(true);
 
         // ALORS elle ne figure plus dans la liste des commandes à transmettre du
         // restaurant
         assertFalse(chezGaston.getaTansmettre().contains(commande));
-        // List<Commande> ListeCommande = new ArrayList<>();
-        // for (int i = 0; i > ListeCommande.size(); i++) {
-        //     //
-        //     Commande result = chezGaston.getaTansmettre().get(i);
-        //     if (result == commande) {
-        //         assertEquals(commande, result);
-        //     }
-        // }
 
     }
 }

@@ -5,7 +5,7 @@ import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class Serveur {
     private Restaurant restaurant;
-    private boolean isMaitreHotel;
+    private boolean isMaitreHotel = false;
     private double chiffreAffaires;
 
     public Serveur() {

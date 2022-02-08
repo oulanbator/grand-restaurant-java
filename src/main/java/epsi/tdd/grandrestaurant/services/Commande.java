@@ -11,7 +11,7 @@ public class Commande {
     boolean epinglee = false;
     Date dateEpinglage;
     private boolean versGendarmerie = false;
-    boolean bTransmise;
+    boolean bTransmise = false;
 
     public Commande() {
     }
