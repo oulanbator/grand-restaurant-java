@@ -8,9 +8,10 @@ public class Commande {
     TypeCommande typeCommande;
     Table table;
     double montant;
-    boolean epinglee;
+    boolean epinglee = false;
     Date dateEpinglage;
-    boolean setVersGendarmerie;
+    private boolean versGendarmerie = false;
+    boolean bTransmise = false;
 
     public Commande() {
     }
@@ -60,12 +61,20 @@ public class Commande {
         this.montant = montant;
     }
 
-    public boolean isSetVersGendarmerie() {
-        return setVersGendarmerie;
+    public boolean isVersGendarmerie() {
+        return versGendarmerie;
     }
 
-    public void setSetVersGendarmerie(boolean setVersGendarmerie) {
-        this.setVersGendarmerie = setVersGendarmerie;
+    public void setVersGendarmerie(boolean versGendarmerie) {
+        this.versGendarmerie = versGendarmerie;
+    }
+
+    public boolean isbTransmise() {
+        return bTransmise;
+    }
+
+    public void setbTransmise(boolean bTransmise) {
+        this.bTransmise = bTransmise;
     }
 
 }
