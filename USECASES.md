@@ -127,24 +127,40 @@ ALORS une exception est lancée
 
 ### Ce qu'on peut transformer en nouveaux usecases dans la consigne (j'ai l'impression que c'est pas intégré mais n'hésitez pas à me donner votre avis)
 
-// (je remets ça ici car il y a la notion de "installé PAR le maître d'hotel" qui n'est pas vraiment intégrée)
+// Victor : je remets ça ici car il y a la notion de "installé PAR le maître d'hotel" qui n'est pas vraiment intégrée)
 
 > un serveur est affecté à un certain nombre de tables par le maître d’hôtel en début de service.
 
 > Lorsqu’un client entre, il est installé à une table libre par l’hôtesse.
 
-// (je remets ça ici car il y a l'idée que le serveur doit venir tout de suite prendre la commande, pas vraiment intégré)
+ETANT DONNE un restaurant
+QUAND un client entre
+ALORS il est installé à une table libre pas l'hôtesse
+
+// Victor : je remets ça ici car il y a l'idée que le serveur doit venir tout de suite prendre la commande, pas vraiment intégré)
 
 > Le serveur vient prendre la commande, qu’il transmet numériquement à la cuisine.
 
 > Lorsque la cuisine a préparé le plat, elle fait vibrer le téléphone du serveur, qui effectue le service à table
 
+ETANT DONNE un la cuisine d'un restaurant ayant une commande
+QUAND le plat est prêt
+ALORS elle fait vibrer le téléphone du serveur qui effectue le service à table
+
 > Elle peut aussi refuser une commande faute de stocks.
+
+ETANT DONNE un la cuisine d'un restaurant ayant une commande
+QUAND le plat n'est plus disponible faute de stocks
+ALORS la commande est refusée
 
 > Le serveur propose un remplacement au client, au prix du plat d’origine si la
 > différence est inférieure à un pourcentage fixé par le gérant.
 
 > Un plat en rupture est immédiatement retiré de la carte.
+
+ETANT DONNE un restaurant ayant un plat à la carte
+QUAND le plat est en rupture
+ALORS le plat est n'est plus à la carte
 
 > Les clients règlent en partant, après un certain nombre de plats.
 
@@ -152,10 +168,18 @@ ALORS une exception est lancée
 
 > A tout moment, les clients peuvent solliciter leur serveur pour commander des extras.
 
+ETANT DONNE un restaurant avec des clients à table
+QUAND les clients sollicitent le serveur pour commander
+ALORS le serveur ajoute les commandes extras à l'addition 
+
 > La nourriture doit être demandée numériquement à la cuisine, alors que les boissons
 > sont servies par le serveur lui-même au bar.
 
 > Tout est noté en vue de la note finale.
+
+ETANT DONNE un restaurant avec des clients
+QUAND les clients passent commande de nourriture ou de boissons
+ALORS tout est noté en vue de la note finale
 
 > Les menus sont changés chaque jour par le siège de la franchise.
 
@@ -165,4 +189,9 @@ ALORS une exception est lancée
 > Le siège de la franchise doit pouvoir générer un rapport quotidien des impayés
 > et du chiffre d’affaire à 3 niveaux : franchise, restaurant, serveur.
 
+// Victor : Celle-ci me semble en contradiction avec le fait qu'un client "peut" partir sans payer
 > A la fin du repas la commande est éditée et réglée.
+
+ETANT DONNE un restaurant avec des clients ayant commandé
+QUAND les clients ont terminé leur repas
+ALORS la commande est marquée comme réglée
