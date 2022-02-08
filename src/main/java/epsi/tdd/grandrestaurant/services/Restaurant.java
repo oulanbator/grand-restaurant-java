@@ -13,21 +13,6 @@ public class Restaurant {
     private List<Commande> aTansmettre = new ArrayList<>();
     private boolean serviceEnCours = false;
 
-    public void transmettreCommandesGendarmerie() {
-        for (Commande commande : commandesPrises) {
-            if (commande.isEpinglee()) {
-                long dateEpinglage = commande.getDateEpinglage().getTime();
-                long calendar = Calendar.getInstance().getTime().getTime();
-                long diff = calendar - dateEpinglage;
-                float res = (diff / (1000 * 60 * 60 * 24));
-                if (res >= 15) {
-                    commande.setVersGendarmerie(true);
-                    aTansmettre.add(commande);
-                }
-            }
-        }
-    }
-
     public Restaurant() {
         creerMaitreHotel();
     }
@@ -61,10 +46,6 @@ public class Restaurant {
         serviceEnCours = false;
     }
 
-    public List<Table> getTables() {
-        return this.tables;
-    }
-
     public Serveur addNewServeur() {
         Serveur serveur = new Serveur();
         serveur.setRestaurant(this);
@@ -85,17 +66,6 @@ public class Restaurant {
         return tablesLibres;
     }
 
-    // Retire une commande de la liste des commande à transmettre à la gendarmerie
-    public List<Commande> getRetirerCommandeATransmettre(List<Commande> aTransmettre) {
-        for (int i = 0; i > aTransmettre.size(); i++) {
-            Commande commande = new Commande();
-            if (commande.bTransmise) {
-                aTransmettre.remove(commande);
-            }
-        }
-        return aTransmettre;
-    }
-
     // Affecte un serveur à la table
     public boolean affecterServeurTable(int indexTable, Serveur serveur) {
         Table table = tables.get(indexTable);
@@ -104,6 +74,29 @@ public class Restaurant {
         } else {
             table.setServeur(serveur);
             return true;
+        }
+    }
+
+    public void listerCommandesATransmettreGendarmerie() {
+        for (Commande commande : commandesPrises) {
+            if (commande.isEpinglee()) {
+                long dateEpinglage = commande.getDateEpinglage().getTime();
+                long calendar = Calendar.getInstance().getTime().getTime();
+                long diff = calendar - dateEpinglage;
+                float res = (diff / (1000 * 60 * 60 * 24));
+                if (res >= 15) {
+                    commande.setVersGendarmerie(true);
+                    aTansmettre.add(commande);
+                }
+            }
+        }
+    }
+
+    public void transmettreCommandesGendarmerie() {
+        List<Commande> commandesATransmettre = new ArrayList<Commande>(aTansmettre);
+        for (Commande commande : commandesATransmettre) {
+            commande.setbTransmise(true);
+            aTansmettre.remove(commande);
         }
     }
 
@@ -125,13 +118,12 @@ public class Restaurant {
         this.aTansmettre.add(commande);
     }
 
-    public List<Commande> getaTansmettre() {
-        
-        return aTansmettre;
+    public List<Table> getTables() {
+        return this.tables;
     }
 
-    public void setaTansmettre(List<Commande> aTansmettre) {
-        this.aTansmettre = aTansmettre;
+    public List<Commande> getaTansmettre() {
+        return aTansmettre;
     }
 
     public List<Serveur> getServeurs() {
@@ -145,5 +137,4 @@ public class Restaurant {
     public List<Commande> getCommandesPrises() {
         return commandesPrises;
     }
-
 }

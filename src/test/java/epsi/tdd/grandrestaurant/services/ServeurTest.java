@@ -3,6 +3,7 @@ package epsi.tdd.grandrestaurant.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ServeurTest {
 
         // QUAND il prend une commande de nourriture
         Commande commande = new Commande(TypeCommande.NOURRITURE);
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
 
         // ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce
         // restaurant
@@ -48,7 +49,7 @@ public class ServeurTest {
 
         // QUAND il prend une commande de boissons
         Commande commande = new Commande(TypeCommande.BOISSONS);
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
 
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de
         // ce restaurant
@@ -83,11 +84,12 @@ public class ServeurTest {
     public void chiffreAffairesApresCommande() {
         // ÉTANT DONNÉ un nouveau serveur
         Serveur serveur = new Serveur();
+        serveur.setRestaurant(mock(Restaurant.class));
 
         // QUAND il prend une commande
         Commande commande = new Commande();
         commande.setMontant(Math.random() * 100); // set montant aléatoire entre 0 et 100
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
 
         // ALORS son chiffre d'affaires est le montant de celle-ci
         double result = serveur.getChiffreAffaires();
@@ -104,14 +106,15 @@ public class ServeurTest {
     public void chiffreAffaireCommandeSuivante() {
         // ÉTANT DONNÉ un serveur ayant déjà pris une commande
         Serveur serveur = new Serveur();
+        serveur.setRestaurant(mock(Restaurant.class));
         Commande commande = new Commande();
         commande.setMontant(Math.random() * 100); // set montant aléatoire entre 0 et 100
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
 
         // QUAND il prend une nouvelle commande
         Commande commande2 = new Commande();
         commande2.setMontant(Math.random() * 100); // set montant aléatoire entre 0 et 100
-        serveur.prendreCommande(commande2);
+        serveur.prendreCommande(commande2, mock(Table.class));
 
         // ALORS son chiffre d'affaires est la somme des deux commandes
         double result = serveur.getChiffreAffaires();

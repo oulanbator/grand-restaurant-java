@@ -23,7 +23,8 @@
     	ALORS le chiffre d'affaires de la franchise est X * Y
     	CAS(X = 0; X = 1; X = 2; X = 100)
     	CAS(Y = 1.0)
-
+    
+    // *** Intégré
     SCOPE Franchise
     	ÉTANT DONNÉ une franchise ayant X restaurants de Y serveurs chacuns
     	QUAND tous les serveurs prennent une commande d'un montant Z
@@ -72,7 +73,8 @@
     ÉTANT DONNE une commande à transmettre gendarmerie
     QUAND on consulte la liste des commandes à transmettre du restaurant
     ALORS elle y figure
-
+    
+    // *** Intégré
     ÉTANT DONNE une commande à transmettre gendarmerie
     QUAND elle est marquée comme transmise à la gendarmerie
     ALORS elle ne figure plus dans la liste des commandes à transmettre du restaurant
@@ -168,18 +170,14 @@ ALORS le plat est n'est plus à la carte
 
 > A tout moment, les clients peuvent solliciter leur serveur pour commander des extras.
 
-ETANT DONNE un restaurant avec des clients à table
-QUAND les clients sollicitent le serveur pour commander
-ALORS le serveur ajoute les commandes extras à l'addition 
+ETANT DONNE un restaurant avec des clients à une table
+QUAND les clients sollicitent le serveur pour commander un extra
+ALORS le serveur ajoute les commandes à l'addition
 
 > La nourriture doit être demandée numériquement à la cuisine, alors que les boissons
 > sont servies par le serveur lui-même au bar.
 
-> Tout est noté en vue de la note finale.
 
-ETANT DONNE un restaurant avec des clients
-QUAND les clients passent commande de nourriture ou de boissons
-ALORS tout est noté en vue de la note finale
 
 > Les menus sont changés chaque jour par le siège de la franchise.
 
@@ -195,3 +193,15 @@ ALORS tout est noté en vue de la note finale
 ETANT DONNE un restaurant avec des clients ayant commandé
 QUAND les clients ont terminé leur repas
 ALORS la commande est marquée comme réglée
+
+
+
+
+
+// USECASES BONUS INTEGRES
+
+// TableTest
+ETANT DONNE un restaurant avec des clients à une table
+QUAND les clients passent commande de nourriture ou de boissons
+ALORS tout est noté en vue de la note finale
+

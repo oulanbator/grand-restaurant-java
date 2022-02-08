@@ -22,4 +22,8 @@ public class Franchise {
         }
         return chiffreAffaire;
     }
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
 }

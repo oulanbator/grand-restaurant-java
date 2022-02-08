@@ -20,9 +20,10 @@ public class CommandeTest {
     public void commandeEpinglee() {
         // ÉTANT DONNE un serveur ayant pris une commande
         Serveur serveur = new Serveur();
+        serveur.setRestaurant(mock(Restaurant.class));
         Commande commande = new Commande();
 
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
 
         // QUAND il la déclare comme non-payée
         serveur.commandeIsPaid(commande, false);
@@ -42,7 +43,7 @@ public class CommandeTest {
         Restaurant restaurant = new Restaurant();
         Serveur serveur = restaurant.addNewServeur();
         Commande commande = new Commande();
-        serveur.prendreCommande(commande);
+        serveur.prendreCommande(commande, mock(Table.class));
         serveur.commandeIsPaid(commande, false); // Epingle la commande si inpayé(false)
 
         // QUAND elle date d'il y a au moins 15 jours
@@ -51,7 +52,7 @@ public class CommandeTest {
         commande.setDateEpinglage(calendar.getTime());
 
         // ALORS cette commande est marquée comme à transmettre gendarmerie
-        restaurant.transmettreCommandesGendarmerie();
+        restaurant.listerCommandesATransmettreGendarmerie();
         assertTrue(commande.isVersGendarmerie() == true);
     }
 
@@ -88,10 +89,9 @@ public class CommandeTest {
         Restaurant chezGaston = new Restaurant();
         Commande commande = mock(Commande.class);
         chezGaston.addCommandeTransmettre(commande);
-        commande.setVersGendarmerie(true);
 
         // QUAND elle est marquée comme transmise à la gendarmerie
-        commande.setbTransmise(true);
+        chezGaston.transmettreCommandesGendarmerie();
 
         // ALORS elle ne figure plus dans la liste des commandes à transmettre du
         // restaurant

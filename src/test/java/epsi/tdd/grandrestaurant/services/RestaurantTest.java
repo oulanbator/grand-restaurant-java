@@ -130,41 +130,4 @@ public class RestaurantTest {
         }
     }
 
-    /**
-     * ÉTANT DONNÉ un restaurant ayant X serveurs
-     * QUAND tous les serveurs prennent une commande d'un montant Y
-     * ALORS le chiffre d'affaires de la franchise est X * Y
-     * CAS(X = 0; X = 1; X = 2; X = 100)
-     * CAS(Y = 1.0)
-     */
-    @Test
-    public void chiffreAffaireFranchise() {
-        // ÉTANT DONNÉ un restaurant ayant X serveurs
-        Franchise franchise = new Franchise();
-        Restaurant restaurant = franchise.newRestaurant();
-        int X = 0;
-        // TODO : Tester les modifications de la variable X avec frameWork d'assertion
-        for (int i = 0; i < X; i++) {
-            restaurant.addNewServeur();
-        }
-        System.out.println(restaurant.getServeurs().size());
-
-        // QUAND tous les serveurs prennent une commande d'un montant Y
-        // TODO : Faire un constructeur avec montant de la commande
-        Commande commande = new Commande();
-        double Y = 1;
-        commande.setMontant(Y);
-
-        for (Serveur serveur : restaurant.getServeurs()) {
-            serveur.prendreCommande(commande);
-        }
-        // ALORS le chiffre d'affaires de la franchise est X * Y
-        double result = franchise.getChiffreAffaire();
-        double expected = restaurant.getServeurs().size() * Y;
-
-        assertEquals(expected, result);
-        // CAS(X = 0; X = 1; X = 2; X = 100)
-        // CAS(Y = 1.0)
-    }
-
 }

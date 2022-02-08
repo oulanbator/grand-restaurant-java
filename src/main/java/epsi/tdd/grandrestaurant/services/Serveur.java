@@ -13,9 +13,9 @@ public class Serveur {
         this.chiffreAffaires = 0;
     }
 
-    public void prendreCommande(Commande commande) {
+    public void prendreCommande(Commande commande, Table table) {
         restaurant.addCommande(commande);
-        // Associe la table à la commande ???
+        table.getAddition().add(commande);
 
         // traitement de la commande selon le type de commande
         TypeCommande type = commande.getTypeCommande();
