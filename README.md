@@ -42,3 +42,80 @@ https://www.guru99.com/junit-assert.html#:~:text=What%20is%20Junit%20Assert%3F%2
 
 > JSpec : https://www.codeflow.site/fr/article/jspec
 (Vulnérabilités sur cette dépendance)
+
+# ITERATIONS 
+
+## ITERATION 1 :
+### Consigne :
+Développez la solution.
+Testez-là, de préférence en TDD.
+But : jouer avec les tests et le code.
+Git Push a minima à la fin de l’itération.
+Git Tag marquant la fin de cette itération.
+On critiquera ensuite tous ensemble.
+
+## ITERATION 2 : 
+### Consigne :
+Ne touchez pas au code.
+Refactoring des tests avec tout ce que nous avons vu.
+But : des tests propres et lisibles par un techlead externe.
+Contrainte : une branche par personne. Aucun setup de tests (frameworks d’assertions&de test) ne doit être identique dans l’équipe.
+Mockiste ou anti-mockiste, mais pas de mélange dans une équipe.
+
+### Les outils du testeur :
+> Indispensables : 
+Framework de test.
+Bibliothèque d’assertions.
+Console de tests
+
+> Les patterns :
+Builder
+Generator
+
+> Les doubles de test: Mocks, Stubs, etc.
+Dummy
+    Utilisé pour remplir les listes d’arguments.
+    Ne doit pas être appelé.
+    Potentiellement un code smell.
+    Idéalement, doit throw une Exception si on l’appelle.
+
+Stub
+    Renvoie une valeur fixe indépendante du test.
+    Le plus souvent une valeur par défaut, sans signification métier.
+    Appeler une classe ou variable Stub indique aux autres que la valeur n’importe pas dans le cadre du test.
+    Si l’issue du test dépend de la valeur, n’appelez pas cela un stub.
+
+Spy
+    Enregistre un ou plusieurs appels qu’il reçoit.
+    Se comporte comme un Stub.
+    Peut allègrement violer les règles SOLID, il sert à cela.
+
+Mock
+    Objets répondant des réponses préprogrammés si elles reçoivent les paramètres attendus.
+    Peuvent faire le travail des doubles vus précédemment.
+    Utilisez toujours des objets plus spécifiques si possible
+    Un test unitaire ne peut en compter qu’un seul.
+    Un test non-unitaire doit en compter le moins possible.
+    Code smell courant.
+
+
+## ITERATION 3 
+### Consigne :
+Choisissez un Scope de votre choix dans UseCase
+Rédigez un test de recette, un jeu de tests d’intégration (avec une fausse BDD de votre choix), des tests système et des tests unitaires.
+Une fois terminé, discutez de ces tests. Écrivez dans le Readme :
+Ce que vous pensez d’une telle stratégie.
+Comment vous auriez testé ce code.
+
+## ITERATION 4
+### Consigne :
+Créez un projet d’API. Développez un scope de votre choix.
+Créez un script (bash, batch, powershell, perl, python) sur une VM ou un VPS.
+Il doit 
+    Fetch
+    Se fixer sur une branche paramétrable
+    Build
+    Test
+    Si toutes les étapes précédentes ont réussi, déployer en conservant la configuration précédente.
+    (valider avec un curl sur localhost)
+Incluez le script dans le rendu final !
