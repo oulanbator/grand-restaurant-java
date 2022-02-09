@@ -1,11 +1,16 @@
 package epsi.tdd.grandrestaurant.services;
 
 public class Client {
+    private String name;
     
-    public Client(String a, String b, String c) {
+    public Client() {
+    }
+
+    public Client(String name) {
+        this.name = name;
     }
 
     public String getName() {
-        return null;
+        return this.name;
     }
 }

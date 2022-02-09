@@ -2,6 +2,7 @@ package epsi.tdd.grandrestaurant.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Franchise {
     private List<Restaurant> restaurants = new ArrayList<>();
@@ -37,8 +38,13 @@ public class Franchise {
 
     public void modifiePrixDuPlat(Plat plat, double newPrix) {
         for (Plat platDuMenu : menu) {
-            if (platDuMenu.equals(plat)) {
+            if (Objects.equals(platDuMenu.getId(), plat.getId())) {
                 platDuMenu.setPrix(newPrix);
+                restaurants.forEach(restaurant -> {
+                    if (restaurant.isFiliale()) {
+                        restaurant.modifiePrixDuPlat(plat, newPrix);
+                    }
+                });
             }
         }
     }
@@ -51,7 +57,7 @@ public class Franchise {
 
     public Plat getPlat(Plat plat) {
         for (Plat platDuMenu : menu) {
-            if (platDuMenu.getId() == plat.getId()) {
+            if (Objects.equals(platDuMenu.getId(), plat.getId())) {
                 return  platDuMenu;
             }
         }

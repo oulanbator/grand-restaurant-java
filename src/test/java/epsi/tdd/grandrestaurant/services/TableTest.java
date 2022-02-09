@@ -56,4 +56,29 @@ public class TableTest {
         List<Table> tablesLibres = restaurant.getTablesLibres();
         assertTrue(tablesLibres.contains(tableCiblee));
     }
+
+    /**
+     * ETANT DONNE un restaurant
+     * QUAND un client entre
+     * ALORS il est installé à une table libre par le maitre d'hôtel
+     */
+    @Test
+    public void entreeClient() {
+        //ETANT DONNE un restaurant
+        Restaurant restaurant = new Restaurant();
+        int tablesLibresInitiales = 3;
+        restaurant.createTables(tablesLibresInitiales);
+        restaurant.startService();
+
+        //QUAND un client entre
+        Client client = new Client("Vladimir Poutine");
+        restaurant.entreeClient(client);
+
+        //ALORS il est installé à une table libre par le maitre d'hôtel
+        // TODO : utiliser un spy ici ?
+        int nbTablesLibres = restaurant.getTablesLibres().size();
+        Table tableOccupee = restaurant.getTablesOccupees().get(0);
+        assertTrue(nbTablesLibres == (tablesLibresInitiales - 1) &&
+                    tableOccupee.getClients().get(0) == client);
+    }
 }

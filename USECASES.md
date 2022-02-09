@@ -79,7 +79,7 @@
     QUAND elle est marquée comme transmise à la gendarmerie
     ALORS elle ne figure plus dans la liste des commandes à transmettre du restaurant
 
-## SCOPE Installation
+## SCOPE Installation (TableTest.java)
 
     // *** Intégré
     ÉTANT DONNE une table dans un restaurant ayant débuté son service
@@ -91,18 +91,26 @@
     QUAND la table est libérée
     ALORS cette table apparaît sur la liste des tables libres du restaurant
 
+    // *** UseCase Bonus : Intégré
+    ETANT DONNE un restaurant
+    QUAND un client entre
+    ALORS il est installé à une table libre par le maitre d'hôtel
+
 ## SCOPE Menus
 
+    // *** Intégré
     ÉTANT DONNE un restaurant ayant le statut de filiale d'une franchise
     ET une franchise définissant un menu ayant un plat
     QUAND la franchise modifie le prix du plat
     ALORS le prix du plat dans le menu du restaurant est celui défini par la franchise
 
+    // *** Intégré
     ÉTANT DONNE un restaurant appartenant à une franchise et définissant un menu ayant un plat
     ET une franchise définissant un menu ayant le même plat
     QUAND la franchise modifie le prix du plat
     ALORS le prix du plat dans le menu du restaurant reste inchangé
 
+    // *** Intégré
     ÉTANT DONNE un restaurant appartenant à une franchise et définissant un menu ayant un plat
     QUAND la franchise ajoute un nouveau plat
     ALORS la carte du restaurant propose le premier plat au prix du restaurant et le second au prix de la franchise
@@ -146,9 +154,9 @@ ALORS une exception est lancée
 
 > Lorsqu’un client entre, il est installé à une table libre par l’hôtesse.
 
-ETANT DONNE un restaurant
-QUAND un client entre
-ALORS il est installé à une table libre pas l'hôtesse
+    ETANT DONNE un restaurant
+    QUAND un client entre
+    ALORS il est installé à une table libre par le maitre d'hôtel
 
 // Victor : je remets ça ici car il y a l'idée que le serveur doit venir tout de suite prendre la commande, pas vraiment intégré)
 
@@ -156,24 +164,24 @@ ALORS il est installé à une table libre pas l'hôtesse
 
 > Lorsque la cuisine a préparé le plat, elle fait vibrer le téléphone du serveur, qui effectue le service à table
 
-ETANT DONNE la cuisine d'un restaurant ayant une commande
-QUAND le plat est prêt
-ALORS elle fait vibrer le téléphone du serveur qui effectue le service à table
+    ETANT DONNE la cuisine d'un restaurant ayant une commande
+    QUAND le plat est prêt
+    ALORS elle fait vibrer le téléphone du serveur qui effectue le service à table
 
 > Elle peut aussi refuser une commande faute de stocks.
 
-ETANT DONNE un la cuisine d'un restaurant ayant une commande
-QUAND le plat n'est plus disponible faute de stocks
-ALORS la commande est refusée
+    ETANT DONNE la cuisine d'un restaurant ayant une commande
+    QUAND le plat n'est plus disponible faute de stocks
+    ALORS la commande est refusée
 
 > Le serveur propose un remplacement au client, au prix du plat d’origine si la
 > différence est inférieure à un pourcentage fixé par le gérant.
 
 > Un plat en rupture est immédiatement retiré de la carte.
 
-ETANT DONNE un restaurant ayant un plat à la carte
-QUAND le plat est en rupture
-ALORS le plat est n'est plus à la carte
+    ETANT DONNE un restaurant ayant un plat à la carte
+    QUAND le plat est en rupture
+    ALORS le plat est n'est plus à la carte
 
 > Les clients règlent en partant, après un certain nombre de plats.
 

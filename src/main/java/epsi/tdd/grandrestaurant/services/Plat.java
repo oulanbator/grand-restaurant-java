@@ -1,22 +1,22 @@
 package epsi.tdd.grandrestaurant.services;
 
 public class Plat {
-    private int id;
+    private String id;
     private double prix;
 
     public Plat() {
     }
 
-    public Plat(int identifiant, double prix) {
+    public Plat(String identifiant, double prix) {
         this.id = identifiant;
         this.prix = prix;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

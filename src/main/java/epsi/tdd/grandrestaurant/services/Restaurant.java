@@ -1,8 +1,11 @@
 package epsi.tdd.grandrestaurant.services;
 
+import org.apache.el.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class Restaurant {
     private Serveur maitreHotel;
@@ -22,12 +25,14 @@ public class Restaurant {
     public Restaurant(List<Plat> menu) {
         creerMaitreHotel();
         for (Plat plat : menu) {
-            this.menu.add(plat);
+            Plat platRestaurant = new Plat(plat.getId(), plat.getPrix());
+            this.menu.add(platRestaurant);
         }
     }
 
     public void addPlatToMenu(Plat plat) {
-        this.menu.add(plat);
+        Plat platRestaurant = new Plat(plat.getId(), plat.getPrix());
+        this.menu.add(platRestaurant);
     }
 
     private void creerMaitreHotel() {
@@ -161,10 +166,29 @@ public class Restaurant {
 
     public Plat getPlat(Plat plat) {
         for (Plat platDuMenu : this.menu) {
-            if (platDuMenu.getId() == plat.getId()) {
+            if (Objects.equals(platDuMenu.getId(), plat.getId())) {
                 return  platDuMenu;
             }
         }
         return null;
+    }
+
+    public void modifiePrixDuPlat(Plat plat, double newPrix) {
+        Plat platDuRestaurant = getPlat(plat);
+        platDuRestaurant.setPrix(newPrix);
+    }
+
+    public void entreeClient(Client client) {
+        getTablesLibres().get(0).affecterClient(client);
+    }
+
+    public List<Table> getTablesOccupees() {
+        List<Table> tablesOccupees = new ArrayList<>();
+        for (Table table : tables) {
+            if (!table.isLibre()) {
+                tablesOccupees.add(table);
+            }
+        }
+        return tablesOccupees;
     }
 }
