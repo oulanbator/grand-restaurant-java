@@ -118,6 +118,17 @@
     ÉTANT DONNE un serveur dans un restaurant
     QUAND il prend une commande de boissons
     ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant
+    
+    // *** UseCase Bonus : Intégré
+    ETANT DONNE un restaurant avec des clients à une table
+    QUAND les clients passent commande de nourriture ou de boissons
+    ALORS tout est noté en vue de la note finale
+
+    // *** UseCase Bonus : Intégré
+    ETANT DONNE un restaurant avec des clients à une table
+    ET les clients ayant déjà passé commande
+    QUAND les clients sollicitent le serveur pour commander un extra
+    ALORS le serveur ajoute les nouvelles commandes à l'addition
 
 # ---- BONUS -------------------------------------------------------------------------------------
 
@@ -145,7 +156,7 @@ ALORS il est installé à une table libre pas l'hôtesse
 
 > Lorsque la cuisine a préparé le plat, elle fait vibrer le téléphone du serveur, qui effectue le service à table
 
-ETANT DONNE un la cuisine d'un restaurant ayant une commande
+ETANT DONNE la cuisine d'un restaurant ayant une commande
 QUAND le plat est prêt
 ALORS elle fait vibrer le téléphone du serveur qui effectue le service à table
 
@@ -168,11 +179,6 @@ ALORS le plat est n'est plus à la carte
 
 > Le serveur doit ensuite nettoyer et dresser la table pour la libérer.
 
-> A tout moment, les clients peuvent solliciter leur serveur pour commander des extras.
-
-ETANT DONNE un restaurant avec des clients à une table
-QUAND les clients sollicitent le serveur pour commander un extra
-ALORS le serveur ajoute les commandes à l'addition
 
 > La nourriture doit être demandée numériquement à la cuisine, alors que les boissons
 > sont servies par le serveur lui-même au bar.
@@ -200,8 +206,13 @@ ALORS la commande est marquée comme réglée
 
 // USECASES BONUS INTEGRES
 
-// TableTest
+// CommandeTest
 ETANT DONNE un restaurant avec des clients à une table
 QUAND les clients passent commande de nourriture ou de boissons
 ALORS tout est noté en vue de la note finale
 
+// CommandeTest
+ETANT DONNE un restaurant avec des clients à une table
+ET les clients ayant déjà passé commande
+QUAND les clients sollicitent le serveur pour commander un extra
+ALORS le serveur ajoute les nouvelles commandes à l'addition

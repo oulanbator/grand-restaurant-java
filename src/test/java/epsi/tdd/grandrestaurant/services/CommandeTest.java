@@ -96,6 +96,61 @@ public class CommandeTest {
         // ALORS elle ne figure plus dans la liste des commandes à transmettre du
         // restaurant
         assertFalse(chezGaston.getaTansmettre().contains(commande));
+    }
 
+    /**
+     * ETANT DONNE un restaurant avec des clients à une table
+     * QUAND les clients passent commande de nourriture ou de boissons
+     * ALORS tout est noté en vue de la note finale
+     */
+    @Test
+    public void noteFinale() {
+//        ETANT DONNE un restaurant avec des clients à une table
+        Restaurant restaurant = new Restaurant();
+        Serveur serveur = restaurant.addNewServeur();
+        restaurant.createTables(2);
+        Table table = restaurant.getTables().get(0);
+        table.setServeur(serveur);
+        restaurant.startService(); // Inutile ?
+
+//        QUAND les clients passent commande de nourriture et de boissons auprès du serveur
+        Commande commandeNourriture = mock(Commande.class);
+        Commande commandeBoissons = mock(Commande.class);
+        table.passeCommande(commandeNourriture);
+        table.passeCommande(commandeBoissons);
+
+//        ALORS tout est noté en vue de la note finale
+        assertTrue(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
+
+    }
+
+    /**
+     * ETANT DONNE un restaurant avec des clients à une table
+     * ET les clients ayant déjà passé commande
+     * QUAND les clients sollicitent le serveur pour commander un extra
+     * ALORS le serveur ajoute les nouvelles commandes à l'addition
+     */
+    @Test
+    public void commandeExtras() {
+//        ETANT DONNE un restaurant avec des clients à une table
+        Restaurant restaurant = new Restaurant();
+        Serveur serveur = restaurant.addNewServeur();
+        restaurant.createTables(2);
+        Table table = restaurant.getTables().get(0);
+        table.setServeur(serveur);
+        restaurant.startService(); // Inutile ?
+
+//        ET les clients ayant déjà passé commande
+        Commande premiereCommande = mock(Commande.class);
+        table.passeCommande(premiereCommande);
+
+//        QUAND les clients sollicitent le serveur pour commander un extra
+        Commande commandeExtras = mock(Commande.class);
+        table.passeCommande(commandeExtras);
+
+//        ALORS le serveur ajoute les nouvelles commandes à l'addition
+        // TODO : Est-ce qu'on pourrais pas plutôt faire un "spy" pour vérifier que le
+        //  serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier l'addition ?
+        assertTrue(table.getAddition().contains(commandeExtras));
     }
 }

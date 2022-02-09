@@ -11,10 +11,23 @@ public class Restaurant {
     private List<Commande> commandesPrises = new ArrayList<>();
     private List<Commande> tachesCuisine = new ArrayList<>();
     private List<Commande> aTansmettre = new ArrayList<>();
+    private List<Plat> menu = new ArrayList<>();
     private boolean serviceEnCours = false;
+    private boolean isFiliale;
 
     public Restaurant() {
         creerMaitreHotel();
+    }
+
+    public Restaurant(List<Plat> menu) {
+        creerMaitreHotel();
+        for (Plat plat : menu) {
+            this.menu.add(plat);
+        }
+    }
+
+    public void addPlatToMenu(Plat plat) {
+        this.menu.add(plat);
     }
 
     private void creerMaitreHotel() {
@@ -136,5 +149,22 @@ public class Restaurant {
 
     public List<Commande> getCommandesPrises() {
         return commandesPrises;
+    }
+
+    public boolean isFiliale() {
+        return isFiliale;
+    }
+
+    public void setFiliale(boolean filiale) {
+        isFiliale = filiale;
+    }
+
+    public Plat getPlat(Plat plat) {
+        for (Plat platDuMenu : this.menu) {
+            if (platDuMenu.getId() == plat.getId()) {
+                return  platDuMenu;
+            }
+        }
+        return null;
     }
 }
