@@ -179,7 +179,9 @@ public class Restaurant {
     }
 
     public void entreeClient(Client client) {
-        getTablesLibres().get(0).affecterClient(client);
+        Table table = getTablesLibres().get(0);
+        client.setTable(table);
+        table.affecterClient(client);
     }
 
     public List<Table> getTablesOccupees() {

@@ -12,15 +12,31 @@ public class Commande {
     Date dateEpinglage;
     private boolean versGendarmerie = false;
     boolean bTransmise = false;
+    private boolean isRegle;
+
+    
+
+    
 
     public Commande() {
+        this.isRegle = false;
     }
 
     public Commande(TypeCommande type) {
+        this.isRegle = false;
         this.typeCommande = type;
     }
 
     // GETTERS & SETTERS
+    
+    public void setIsRegle(boolean isRegle) {
+        this.isRegle = isRegle;
+    }
+    
+    public boolean isIsRegle() {
+        return isRegle;
+    }
+    
     public Date getDateEpinglage() {
         return dateEpinglage;
     }

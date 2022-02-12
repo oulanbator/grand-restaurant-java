@@ -153,4 +153,28 @@ public class CommandeTest {
         //  serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier l'addition ?
         assertTrue(table.getAddition().contains(commandeExtras));
     }
+    
+//    ETANT DONNE un restaurant avec des clients ayant commandé
+//QUAND les clients ont terminé leur repas
+//ALORS la commande est marquée comme réglée
+
+   @Test
+   public void repasFini() {
+       //ETANT DONNE un restaurant avec des clients ayant commandé
+       Restaurant restaurant = new Restaurant();
+       Commande commande = new Commande();
+        restaurant.createTables(1);
+        restaurant.startService();
+        Client client = new Client("Vladimir Poutine");
+        restaurant.entreeClient(client);
+      client.getTable().passeCommande(commande);
+        
+       //QUAND les clients ont terminé leur repas
+       client.repasEstFini();
+       //ALORS la commande est marquée comme réglée
+       Table table = restaurant.getTables().get(0);
+       for(Commande c : table.getAddition()){
+               assertTrue(c.isIsRegle());
+       } 
+   }
 }
