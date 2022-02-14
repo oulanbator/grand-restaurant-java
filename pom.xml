@@ -15,6 +15,7 @@
 	<description>Projet Grand Restaurant - TDD</description>
 	<properties>
 		<java.version>11</java.version>
+		<sonar.projectKey>grand-restaurant</sonar.projectKey>
 	</properties>
 	<dependencies>
 		<dependency>
