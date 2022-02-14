@@ -7,11 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GrandRestaurantApplication {
 
 	public static void main(String[] args) {
-		while(true) {
-
-		}
-		// SpringApplication.run(GrandRestaurantApplication.class, args);
-		// System.out.println("DEMARRE");
+		SpringApplication.run(GrandRestaurantApplication.class, args);
+		System.out.println("DEMARRE");
 	}
 
 }
