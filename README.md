@@ -119,3 +119,7 @@ Il doit
     Si toutes les étapes précédentes ont réussi, déployer en conservant la configuration précédente.
     (valider avec un curl sur localhost)
 Incluez le script dans le rendu final !
+
+
+## ITERATION BONUS
+Integration du projet dans un pipeline de CI avec Jenkins et Sonarqube
