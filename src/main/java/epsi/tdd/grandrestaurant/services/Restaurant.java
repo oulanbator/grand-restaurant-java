@@ -39,6 +39,7 @@ public class Restaurant {
         // Crée maitre d'hôtel
         Serveur serveur = new Serveur();
         serveur.setMaitreHotel(true);
+        serveur.setRestaurant(this);
         this.maitreHotel = serveur;
     }
 
