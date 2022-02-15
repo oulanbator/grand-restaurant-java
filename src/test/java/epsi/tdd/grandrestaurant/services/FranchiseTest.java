@@ -1,13 +1,13 @@
 package epsi.tdd.grandrestaurant.services;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 public class FranchiseTest {
 
-    // TODO : Tester les modifications des variables du CA avec frameWork d'assertion
+    // TODO : Tester les modifications des variables du CA avec frameWork
+    // d'assertion
 
     /**
      * ÉTANT DONNÉ un restaurant ayant X serveurs
@@ -40,7 +40,7 @@ public class FranchiseTest {
         double result = franchise.getChiffreAffaire();
         double expected = X * Y;
 
-        assertEquals(expected, result);
+        assertThat(expected).isEqualTo(result);
         // CAS(X = 0; X = 1; X = 2; X = 100)
         // CAS(Y = 1.0)
     }
@@ -53,40 +53,40 @@ public class FranchiseTest {
      * CAS(Y = 0; Y = 1; Y = 2; Y = 1000)
      * CAS(Z = 1.0)
      */
-     @Test
-     public void chiffreAffaireGlobalFranchise() {
-    //    ÉTANT DONNÉ une franchise ayant X restaurants de Y serveurs chacuns
-         int X = 5;
-         Franchise franchise = new Franchise();
-         for (int i = 0 ; i < X ; i++) {
-             Restaurant restaurant = franchise.newRestaurant();
-         }
+    @Test
+    public void chiffreAffaireGlobalFranchise() {
+        // ÉTANT DONNÉ une franchise ayant X restaurants de Y serveurs chacuns
+        int X = 5;
+        Franchise franchise = new Franchise();
+        for (int i = 0; i < X; i++) {
+            Restaurant restaurant = franchise.newRestaurant();
+        }
 
-         int Y = 1000;
-         franchise.getRestaurants().forEach(restaurant -> {
-             for (int i = 0; i < Y; i++) {
-                 restaurant.addNewServeur();
-             }
-         });
+        int Y = 1000;
+        franchise.getRestaurants().forEach(restaurant -> {
+            for (int i = 0; i < Y; i++) {
+                restaurant.addNewServeur();
+            }
+        });
 
-         //    QUAND tous les serveurs prennent une commande d'un montant Z
-         Commande commande = new Commande();
-         double Z = 1;
-         commande.setMontant(Z);
-         franchise.getRestaurants().forEach(restaurant -> {
-             restaurant.getServeurs().forEach(serveur -> {
-                 serveur.prendreCommande(commande, mock(Table.class));
-             });
-         });
+        // QUAND tous les serveurs prennent une commande d'un montant Z
+        Commande commande = new Commande();
+        double Z = 1;
+        commande.setMontant(Z);
+        franchise.getRestaurants().forEach(restaurant -> {
+            restaurant.getServeurs().forEach(serveur -> {
+                serveur.prendreCommande(commande, mock(Table.class));
+            });
+        });
 
-         //    ALORS le chiffre d'affaires de la franchise est X * Y * Z
-         double result = franchise.getChiffreAffaire();
-         double expected = X * Y * Z;
+        // ALORS le chiffre d'affaires de la franchise est X * Y * Z
+        double result = franchise.getChiffreAffaire();
+        double expected = X * Y * Z;
 
-         assertEquals(expected, result);
-         //    CAS(X = 0; X = 1; X = 2; X = 1000)
-         //    CAS(Y = 0; Y = 1; Y = 2; Y = 1000)
-         //    CAS(Z = 1.0)
+        assertThat(result).isEqualTo(expected);
+        // CAS(X = 0; X = 1; X = 2; X = 1000)
+        // CAS(Y = 0; Y = 1; Y = 2; Y = 1000)
+        // CAS(Z = 1.0)
 
-     }
+    }
 }
