@@ -79,7 +79,8 @@ public class RestaurantTest {
 
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
         Serveur serveurDummy = mock(Serveur.class);
-        assertThat(restaurant.affecterServeurTable(indexTable, serveurDummy)).isFalse();
+        assertThat(restaurant.affecterServeurTable(indexTable, serveurDummy))
+                .as("il n'est pas possible de modifier le serveur affecté à la table").isFalse();
     }
 
     /**

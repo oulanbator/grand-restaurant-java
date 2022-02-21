@@ -150,9 +150,6 @@ public class CommandeTest {
         table.passeCommande(commandeExtras);
 
         // ALORS le serveur ajoute les nouvelles commandes à l'addition
-        // TODO : Est-ce qu'on pourrait pas plutôt faire un "spy" pour vérifier que le
-        // serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier
-        // l'addition ?
         assertThat(table.getAddition().contains(commandeExtras));
     }
 

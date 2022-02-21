@@ -38,7 +38,9 @@ et du chiffre d’affaire à 3 niveaux : franchise, restaurant, serveur.
 > JUnit : 
 https://www.guru99.com/junit-assert.html#:~:text=What%20is%20Junit%20Assert%3F%20Assert%20is%20a%20method,types%20of%20assertions%20like%20Boolean%2C%20Null%2C%20Identical%20etc.
 
-> AssertJ :
+> AssertJ : 
+Fournit des instructions d'assertions plus fluidesque celles utilisées généralement par JUnit.
+On commence par  "AssertThat" puis l'assertion et l'instruction(s). ==> isNotNull()/.isEqualTo/.isNotEmpty(), et caetera.
 
 > JSpec : https://www.codeflow.site/fr/article/jspec
 (Vulnérabilités sur cette dépendance)
