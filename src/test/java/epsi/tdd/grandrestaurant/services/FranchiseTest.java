@@ -28,10 +28,8 @@ public class FranchiseTest {
         System.out.println(restaurant.getServeurs().size());
 
         // QUAND tous les serveurs prennent une commande d'un montant Y
-        // TODO : Faire un constructeur avec montant de la commande
-        Commande commande = new Commande();
         double Y = 1;
-        commande.setMontant(Y);
+        Commande commande = new Commande(Y);
 
         for (Serveur serveur : restaurant.getServeurs()) {
             serveur.prendreCommande(commande, mock(Table.class));

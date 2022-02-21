@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class ServeurTest {

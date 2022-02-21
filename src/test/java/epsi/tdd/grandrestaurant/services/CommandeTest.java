@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class CommandeTest {
     /**
@@ -18,7 +19,8 @@ public class CommandeTest {
     @Test
     public void commandeEpinglee() {
         // ÉTANT DONNE un serveur ayant pris une commande
-        Serveur serveur = new Serveur();
+        // Serveur serveur = new Serveur();
+        Serveur serveur = Mockito.mock(Serveur.class);
         serveur.setRestaurant(mock(Restaurant.class));
         Commande commande = new Commande();
 
@@ -148,7 +150,7 @@ public class CommandeTest {
         table.passeCommande(commandeExtras);
 
         // ALORS le serveur ajoute les nouvelles commandes à l'addition
-        // TODO : Est-ce qu'on pourrais pas plutôt faire un "spy" pour vérifier que le
+        // TODO : Est-ce qu'on pourrait pas plutôt faire un "spy" pour vérifier que le
         // serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier
         // l'addition ?
         assertThat(table.getAddition().contains(commandeExtras));
@@ -162,7 +164,7 @@ public class CommandeTest {
     public void repasFini() {
         // ETANT DONNE un restaurant avec des clients ayant commandé
         Restaurant restaurant = new Restaurant();
-        Commande commande = new Commande();
+        Commande commande = Mockito.mock(Commande.class);
         restaurant.createTables(1);
         restaurant.startService();
         Client client = new Client("Vladimir Poutine");

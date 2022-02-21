@@ -14,9 +14,10 @@ public class Commande {
     boolean bTransmise = false;
     private boolean isRegle;
 
-    
-
-    
+    // CONSTRUCTEURS
+    public Commande(double montant) {
+        this.montant = montant;
+    }
 
     public Commande() {
         this.isRegle = false;
@@ -28,15 +29,15 @@ public class Commande {
     }
 
     // GETTERS & SETTERS
-    
+
     public void setIsRegle(boolean isRegle) {
         this.isRegle = isRegle;
     }
-    
+
     public boolean isIsRegle() {
         return isRegle;
     }
-    
+
     public Date getDateEpinglage() {
         return dateEpinglage;
     }
