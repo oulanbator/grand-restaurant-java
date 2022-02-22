@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-
+import static org.javalite.test.jspec.JSpec.*;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,8 @@ public class ServeurTest {
         // ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce
         // restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
-        assertTrue(tachesCuisine.contains(commande));
+        //assertTrue(tachesCuisine.contains(commande));
+        a(tachesCuisine.contains(commande)).shouldBeTrue();
     }
 
     /**
@@ -54,7 +55,8 @@ public class ServeurTest {
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de
         // ce restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
-        assertFalse(tachesCuisine.contains(commande));
+        //assertFalse(tachesCuisine.contains(commande));
+        a(tachesCuisine.contains(commande)).shouldBeFalse();
     }
 
     /**
@@ -68,11 +70,12 @@ public class ServeurTest {
         Serveur serveur = new Serveur();
 
         // QUAND on récupére son chiffre d'affaires
-        double result = serveur.getChiffreAffaires();
+        double ServeurCA = serveur.getChiffreAffaires();
 
         // ALORS celui-ci est à 0
-        double expected = 0F;
-        assertEquals(expected, result);
+        double Reset = 0F;
+        //assertEquals(expected, result);
+        the(ServeurCA).shouldBeEqual(Reset);
     }
 
     /**
@@ -92,9 +95,10 @@ public class ServeurTest {
         serveur.prendreCommande(commande, mock(Table.class));
 
         // ALORS son chiffre d'affaires est le montant de celle-ci
-        double result = serveur.getChiffreAffaires();
-        double expected = commande.getMontant();
-        assertEquals(expected, result);
+        double ServeurCA = serveur.getChiffreAffaires();
+        double MontantCommande = commande.getMontant();
+        //assertEquals(expected, result);
+        the(ServeurCA).shouldBeEqual(MontantCommande);
     }
 
     /**
@@ -117,9 +121,10 @@ public class ServeurTest {
         serveur.prendreCommande(commande2, mock(Table.class));
 
         // ALORS son chiffre d'affaires est la somme des deux commandes
-        double result = serveur.getChiffreAffaires();
-        double expected = commande.getMontant() + commande2.getMontant();
+        double ServeurCA = serveur.getChiffreAffaires();
+        double MontantTotalServeur = commande.getMontant() + commande2.getMontant();
 
-        assertEquals(expected, result);
+        //assertEquals(expected, result);
+        the(ServeurCA).shouldBeEqual(MontantTotalServeur);
     }
 }

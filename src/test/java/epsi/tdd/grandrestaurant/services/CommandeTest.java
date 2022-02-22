@@ -3,7 +3,7 @@ package epsi.tdd.grandrestaurant.services;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-
+import static org.javalite.test.jspec.JSpec.*;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
@@ -29,7 +29,8 @@ public class CommandeTest {
         serveur.commandeIsPaid(commande, false);
 
         // ALORS cette commande est marquée comme épinglée
-        assertTrue(commande.isEpinglee());
+        //assertTrue(commande.isEpinglee());
+        $(commande.isEpinglee()).shouldBeTrue();
     }
 
     /**
@@ -53,7 +54,8 @@ public class CommandeTest {
 
         // ALORS cette commande est marquée comme à transmettre gendarmerie
         restaurant.listerCommandesATransmettreGendarmerie();
-        assertTrue(commande.isVersGendarmerie() == true);
+       // assertTrue(commande.isVersGendarmerie() == true);
+        the(commande.isVersGendarmerie() == true).shouldBeTrue();
     }
 
     /**
@@ -74,7 +76,8 @@ public class CommandeTest {
 
         // ALORS elle y figure
         // Boucle sur les commandes
-        assertTrue(listeCommandes.contains(commandeATransmettre));
+        //assertTrue(listeCommandes.contains(commandeATransmettre));
+        $(listeCommandes.contains(commandeATransmettre)).shouldBeTrue();
     }
 
     /**
@@ -95,7 +98,8 @@ public class CommandeTest {
 
         // ALORS elle ne figure plus dans la liste des commandes à transmettre du
         // restaurant
-        assertFalse(chezGaston.getaTansmettre().contains(commande));
+       // assertFalse(chezGaston.getaTansmettre().contains(commande));
+        $(chezGaston.getaTansmettre().contains(commande)).shouldBeFalse();
     }
 
     /**
@@ -120,8 +124,8 @@ public class CommandeTest {
         table.passeCommande(commandeBoissons);
 
 //        ALORS tout est noté en vue de la note finale
-        assertTrue(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
-
+        //assertTrue(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
+        a(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons)).shouldBeTrue();
     }
 
     /**
@@ -151,7 +155,8 @@ public class CommandeTest {
 //        ALORS le serveur ajoute les nouvelles commandes à l'addition
         // TODO : Est-ce qu'on pourrais pas plutôt faire un "spy" pour vérifier que le
         //  serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier l'addition ?
-        assertTrue(table.getAddition().contains(commandeExtras));
+       // assertTrue(table.getAddition().contains(commandeExtras));
+        a(table.getAddition().contains(commandeExtras)).shouldBeTrue();
     }
     
 //    ETANT DONNE un restaurant avec des clients ayant commandé
@@ -174,7 +179,8 @@ public class CommandeTest {
        //ALORS la commande est marquée comme réglée
        Table table = restaurant.getTables().get(0);
        for(Commande c : table.getAddition()){
-               assertTrue(c.isIsRegle());
+              // assertTrue(c.isIsRegle());
+               the(c.isIsRegle()).shouldBeTrue();
        } 
    }
 }

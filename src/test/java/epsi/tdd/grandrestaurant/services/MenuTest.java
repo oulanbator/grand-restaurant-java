@@ -1,7 +1,7 @@
 package epsi.tdd.grandrestaurant.services;
 
 import org.junit.jupiter.api.Test;
-
+import static org.javalite.test.jspec.JSpec.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MenuTest {
@@ -29,7 +29,8 @@ class MenuTest {
         double prixPlatRestaurant = restaurant.getPlat(plat).getPrix();
         double prixPlatFranchise = franchise.getPlat(plat).getPrix();
 
-        assertEquals(prixPlatFranchise, prixPlatRestaurant);
+       // assertEquals(prixPlatFranchise, prixPlatRestaurant);
+        it(prixPlatFranchise).shouldEqual(prixPlatRestaurant);
     }
 
     /**
@@ -56,7 +57,8 @@ class MenuTest {
 
         //    ALORS le prix du plat dans le menu du restaurant reste inchangé
 
-        assertEquals(prixInitial, restaurant.getPlat(plat).getPrix());
+       // assertEquals(prixInitial, restaurant.getPlat(plat).getPrix());
+        it(restaurant.getPlat(plat).getPrix()).shouldBeEqual(prixInitial);
     }
 
     /**
@@ -80,7 +82,9 @@ class MenuTest {
         franchise.addPlatToMenu(plat2);
 
         //ALORS la carte du restaurant propose le premier plat au prix du restaurant et le second au prix de la franchise
-        assertTrue(restaurant.getPlat(plat1).getPrix() == prixPlatRestaurant &&
-                    restaurant.getPlat(plat2).getPrix() == prixPlatFranchise);
+//        assertTrue(restaurant.getPlat(plat1).getPrix() == prixPlatRestaurant &&
+//                    restaurant.getPlat(plat2).getPrix() == prixPlatFranchise);
+        it(restaurant.getPlat(plat1).getPrix() == prixPlatRestaurant &&
+                    restaurant.getPlat(plat2).getPrix() == prixPlatFranchise).shouldBeTrue();
     }
 }

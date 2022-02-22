@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
-
+import static org.javalite.test.jspec.JSpec.*;
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,8 @@ public class TableTest {
 
         // ALORS cette table n'est plus sur la liste des tables libres du restaurant
         List<Table> tablesLibres = restaurant.getTablesLibres();
-        assertFalse(tablesLibres.contains(tableCiblee));
+        //assertFalse(tablesLibres.contains(tableCiblee));
+         a(tablesLibres.contains(tableCiblee)).shouldBeFalse();
     }
 
     /**
@@ -54,7 +55,8 @@ public class TableTest {
 
         // ALORS cette table apparaît sur la liste des tables libres du restaurant
         List<Table> tablesLibres = restaurant.getTablesLibres();
-        assertTrue(tablesLibres.contains(tableCiblee));
+       // assertTrue(tablesLibres.contains(tableCiblee));
+        a(tablesLibres.contains(tableCiblee)).shouldBeTrue();
     }
 
     /**
@@ -78,7 +80,9 @@ public class TableTest {
         // TODO : utiliser un spy ici ?
         int nbTablesLibres = restaurant.getTablesLibres().size();
         Table tableOccupee = restaurant.getTablesOccupees().get(0);
-        assertTrue(nbTablesLibres == (tablesLibresInitiales - 1) &&
-                    tableOccupee.getClients().get(0) == client);
+//        assertTrue(nbTablesLibres == (tablesLibresInitiales - 1) &&
+//                    tableOccupee.getClients().get(0) == client);
+         $(nbTablesLibres == (tablesLibresInitiales - 1) &&
+                    tableOccupee.getClients().get(0) == client).shouldBeTrue();
     }
 }

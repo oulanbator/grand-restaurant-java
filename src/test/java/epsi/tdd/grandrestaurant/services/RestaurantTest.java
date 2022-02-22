@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-
+import static org.javalite.test.jspec.JSpec.*;
 import org.junit.jupiter.api.Test;
 
 public class RestaurantTest {
@@ -22,7 +22,8 @@ public class RestaurantTest {
         restaurant.startService();
 
         for (Table table : restaurant.getTables()) {
-            assertTrue(table.getServeur().isMaitreHotel());
+//            assertTrue(table.getServeur().isMaitreHotel());
+            $(table.getServeur().isMaitreHotel()).shouldBeTrue();
         }
     }
 
@@ -55,14 +56,15 @@ public class RestaurantTest {
             Serveur result = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
                 Serveur expected = serveur;
-                assertEquals(expected, result);
+                $(expected).shouldBeEqual(result);
             } else {
                 Serveur expected = restaurant.getMaitreHotel();
-                assertEquals(expected, result);
+                $(expected).shouldBeEqual(result);
+               
             }
         }
     }
-
+ 
     /**
      * ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
      * QUAND le service débute
@@ -85,7 +87,8 @@ public class RestaurantTest {
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
         Serveur serveurDummy = mock(Serveur.class);
 
-        assertFalse(restaurant.affecterServeurTable(indexTable, serveurDummy));
+//        assertFalse(restaurant.affecterServeurTable(indexTable, serveurDummy));
+        $(restaurant.affecterServeurTable(indexTable, serveurDummy)).shouldBeFalse();
     }
 
     /**
@@ -119,13 +122,13 @@ public class RestaurantTest {
         // d'hôtel
         for (int i = 0; i < restaurant.getTables().size(); i++) {
             // Récupère le serveur de la table
-            Serveur result = restaurant.getTables().get(i).getServeur();
+            Serveur serveurDeLaTable = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
-                Serveur expected = serveur;
-                assertEquals(expected, result);
+                Serveur serveurNormal = serveur;
+                the(serveurDeLaTable).shouldBeEqual(serveurNormal);
             } else {
-                Serveur expected = restaurant.getMaitreHotel();
-                assertEquals(expected, result);
+                Serveur maitreHotel = restaurant.getMaitreHotel();
+               the(serveurDeLaTable).shouldBeEqual(maitreHotel);
             }
         }
     }

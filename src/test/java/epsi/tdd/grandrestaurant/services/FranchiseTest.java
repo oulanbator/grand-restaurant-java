@@ -1,7 +1,7 @@
 package epsi.tdd.grandrestaurant.services;
 
 import org.junit.jupiter.api.Test;
-
+import static org.javalite.test.jspec.JSpec.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -37,10 +37,12 @@ public class FranchiseTest {
             serveur.prendreCommande(commande, mock(Table.class));
         }
         // ALORS le chiffre d'affaires de la franchise est X * Y
-        double result = franchise.getChiffreAffaire();
-        double expected = X * Y;
+        double CA = franchise.getChiffreAffaire();
+        //double expected = X * Y;
 
-        assertEquals(expected, result);
+     //   assertEquals(expected, CA);
+        the(CA).shouldEqual(X * Y);
+        
         // CAS(X = 0; X = 1; X = 2; X = 100)
         // CAS(Y = 1.0)
     }
@@ -80,10 +82,10 @@ public class FranchiseTest {
          });
 
          //    ALORS le chiffre d'affaires de la franchise est X * Y * Z
-         double result = franchise.getChiffreAffaire();
-         double expected = X * Y * Z;
+         double CA = franchise.getChiffreAffaire();
+        // double expected = X * Y * Z;
 
-         assertEquals(expected, result);
+         the(CA).shouldEqual(X * Y * Z);
          //    CAS(X = 0; X = 1; X = 2; X = 1000)
          //    CAS(Y = 0; Y = 1; Y = 2; Y = 1000)
          //    CAS(Z = 1.0)
