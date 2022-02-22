@@ -1,14 +1,10 @@
 package epsi.tdd.grandrestaurant.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class ServeurTest {
@@ -32,7 +28,9 @@ public class ServeurTest {
         // ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce
         // restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
-        assertTrue(tachesCuisine.contains(commande));
+        assertThat(tachesCuisine)
+                .as("cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant")
+                .contains(commande);
     }
 
     /**
@@ -54,7 +52,9 @@ public class ServeurTest {
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de
         // ce restaurant
         List<Commande> tachesCuisine = restaurant.getTachesCuisine();
-        assertFalse(tachesCuisine.contains(commande));
+        assertThat(commande)
+                .as("cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant")
+                .isNotIn(tachesCuisine);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ServeurTest {
 
         // ALORS celui-ci est à 0
         double expected = 0F;
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ServeurTest {
         // ALORS son chiffre d'affaires est le montant de celle-ci
         double result = serveur.getChiffreAffaires();
         double expected = commande.getMontant();
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 
     /**
@@ -120,6 +120,6 @@ public class ServeurTest {
         double result = serveur.getChiffreAffaires();
         double expected = commande.getMontant() + commande2.getMontant();
 
-        assertEquals(expected, result);
+        assertThat(result).isEqualTo(expected);
     }
 }

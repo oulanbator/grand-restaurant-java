@@ -1,14 +1,15 @@
 package epsi.tdd.grandrestaurant.services;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.mockito.Mockito.mock;
+import static org.assertj.core.api.Assertions.*;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class CommandeTest {
     /**
@@ -19,7 +20,8 @@ public class CommandeTest {
     @Test
     public void commandeEpinglee() {
         // ÉTANT DONNE un serveur ayant pris une commande
-        Serveur serveur = new Serveur();
+        // Serveur serveur = new Serveur();
+        Serveur serveur = Mockito.mock(Serveur.class);
         serveur.setRestaurant(mock(Restaurant.class));
         Commande commande = new Commande();
 
@@ -29,7 +31,7 @@ public class CommandeTest {
         serveur.commandeIsPaid(commande, false);
 
         // ALORS cette commande est marquée comme épinglée
-        assertTrue(commande.isEpinglee());
+        assertThat(commande.isEpinglee());
     }
 
     /**
@@ -53,7 +55,7 @@ public class CommandeTest {
 
         // ALORS cette commande est marquée comme à transmettre gendarmerie
         restaurant.listerCommandesATransmettreGendarmerie();
-        assertTrue(commande.isVersGendarmerie() == true);
+        assertThat(commande.isVersGendarmerie() == true);
     }
 
     /**
@@ -74,7 +76,7 @@ public class CommandeTest {
 
         // ALORS elle y figure
         // Boucle sur les commandes
-        assertTrue(listeCommandes.contains(commandeATransmettre));
+        assertThat(listeCommandes.contains(commandeATransmettre));
     }
 
     /**
@@ -95,7 +97,7 @@ public class CommandeTest {
 
         // ALORS elle ne figure plus dans la liste des commandes à transmettre du
         // restaurant
-        assertFalse(chezGaston.getaTansmettre().contains(commande));
+        assertThat(chezGaston.getaTansmettre().contains(commande));
     }
 
     /**
@@ -105,7 +107,7 @@ public class CommandeTest {
      */
     @Test
     public void noteFinale() {
-//        ETANT DONNE un restaurant avec des clients à une table
+        // ETANT DONNE un restaurant avec des clients à une table
         Restaurant restaurant = new Restaurant();
         Serveur serveur = restaurant.addNewServeur();
         restaurant.createTables(2);
@@ -113,15 +115,15 @@ public class CommandeTest {
         table.setServeur(serveur);
         restaurant.startService(); // Inutile ?
 
-//        QUAND les clients passent commande de nourriture et de boissons auprès du serveur
+        // QUAND les clients passent commande de nourriture et de boissons auprès du
+        // serveur
         Commande commandeNourriture = mock(Commande.class);
         Commande commandeBoissons = mock(Commande.class);
         table.passeCommande(commandeNourriture);
         table.passeCommande(commandeBoissons);
 
-//        ALORS tout est noté en vue de la note finale
-        assertTrue(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
-
+        // ALORS tout est noté en vue de la note finale
+        assertThat(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
     }
 
     /**
@@ -132,7 +134,7 @@ public class CommandeTest {
      */
     @Test
     public void commandeExtras() {
-//        ETANT DONNE un restaurant avec des clients à une table
+        // ETANT DONNE un restaurant avec des clients à une table
         Restaurant restaurant = new Restaurant();
         Serveur serveur = restaurant.addNewServeur();
         restaurant.createTables(2);
@@ -140,41 +142,39 @@ public class CommandeTest {
         table.setServeur(serveur);
         restaurant.startService(); // Inutile ?
 
-//        ET les clients ayant déjà passé commande
+        // ET les clients ayant déjà passé commande
         Commande premiereCommande = mock(Commande.class);
         table.passeCommande(premiereCommande);
 
-//        QUAND les clients sollicitent le serveur pour commander un extra
+        // QUAND les clients sollicitent le serveur pour commander un extra
         Commande commandeExtras = mock(Commande.class);
         table.passeCommande(commandeExtras);
 
-//        ALORS le serveur ajoute les nouvelles commandes à l'addition
-        // TODO : Est-ce qu'on pourrais pas plutôt faire un "spy" pour vérifier que le
-        //  serveur ajoute les nouvelles commandes à l'addition plutôt que de vérifier l'addition ?
-        assertTrue(table.getAddition().contains(commandeExtras));
+        // ALORS le serveur ajoute les nouvelles commandes à l'addition
+        assertThat(table.getAddition().contains(commandeExtras));
     }
-    
-//    ETANT DONNE un restaurant avec des clients ayant commandé
-//QUAND les clients ont terminé leur repas
-//ALORS la commande est marquée comme réglée
 
-   @Test
-   public void repasFini() {
-       //ETANT DONNE un restaurant avec des clients ayant commandé
-       Restaurant restaurant = new Restaurant();
-       Commande commande = new Commande();
+    // ETANT DONNE un restaurant avec des clients ayant commandé
+    // QUAND les clients ont terminé leur repas
+    // ALORS la commande est marquée comme réglée
+
+    @Test
+    public void repasFini() {
+        // ETANT DONNE un restaurant avec des clients ayant commandé
+        Restaurant restaurant = new Restaurant();
+        Commande commande = Mockito.mock(Commande.class);
         restaurant.createTables(1);
         restaurant.startService();
         Client client = new Client("Vladimir Poutine");
         restaurant.entreeClient(client);
-      client.getTable().passeCommande(commande);
-        
-       //QUAND les clients ont terminé leur repas
-       client.repasEstFini();
-       //ALORS la commande est marquée comme réglée
-       Table table = restaurant.getTables().get(0);
-       for(Commande c : table.getAddition()){
-               assertTrue(c.isIsRegle());
-       } 
-   }
+        client.getTable().passeCommande(commande);
+
+        // QUAND les clients ont terminé leur repas
+        client.repasEstFini();
+        // ALORS la commande est marquée comme réglée
+        Table table = restaurant.getTables().get(0);
+        for (Commande c : table.getAddition()) {
+            assertThat(c.isIsRegle());
+        }
+    }
 }

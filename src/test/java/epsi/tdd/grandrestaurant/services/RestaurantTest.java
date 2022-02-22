@@ -1,11 +1,7 @@
 package epsi.tdd.grandrestaurant.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.api.Test;
 
 public class RestaurantTest {
@@ -22,7 +18,7 @@ public class RestaurantTest {
         restaurant.startService();
 
         for (Table table : restaurant.getTables()) {
-            assertTrue(table.getServeur().isMaitreHotel());
+            assertThat(table.getServeur().isMaitreHotel());
         }
     }
 
@@ -39,12 +35,10 @@ public class RestaurantTest {
         restaurant.createTables(3);
         // creer serveur et affecte table
         Serveur serveur = restaurant.addNewServeur();
+
         int indexTableServeur = 0;
-        /*
-         * Table table = restaurant.getTables().get(indexTableServeur);
-         * table.setServeur(serveur);
-         */
         restaurant.affecterServeurTable(indexTableServeur, serveur);
+
         // QUAND le service débute
         restaurant.startService();
 
@@ -55,10 +49,11 @@ public class RestaurantTest {
             Serveur result = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
                 Serveur expected = serveur;
-                assertEquals(expected, result);
+                assertThat(result).isEqualTo(expected);
+                assertThat(result).isEqualTo(expected);
             } else {
                 Serveur expected = restaurant.getMaitreHotel();
-                assertEquals(expected, result);
+                assertThat(result).isEqualTo(expected);
             }
         }
     }
@@ -84,8 +79,8 @@ public class RestaurantTest {
 
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
         Serveur serveurDummy = mock(Serveur.class);
-
-        assertFalse(restaurant.affecterServeurTable(indexTable, serveurDummy));
+        assertThat(restaurant.affecterServeurTable(indexTable, serveurDummy))
+                .as("il n'est pas possible de modifier le serveur affecté à la table").isFalse();
     }
 
     /**
@@ -112,7 +107,6 @@ public class RestaurantTest {
         restaurant.stopService();
 
         // ET qu'une table est affectée à un serveur
-        // TODO : Peut être à revoir sur la définition de ce test
         restaurant.affecterServeurTable(indexTableServeur, serveur);
 
         // ALORS la table éditée est affectée au serveur et les deux autres au maître
@@ -122,10 +116,10 @@ public class RestaurantTest {
             Serveur result = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
                 Serveur expected = serveur;
-                assertEquals(expected, result);
+                assertThat(result).isEqualTo(expected);
             } else {
                 Serveur expected = restaurant.getMaitreHotel();
-                assertEquals(expected, result);
+                assertThat(result).isEqualTo(expected);
             }
         }
     }
