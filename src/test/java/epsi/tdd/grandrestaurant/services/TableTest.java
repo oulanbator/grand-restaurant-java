@@ -1,6 +1,7 @@
 package epsi.tdd.grandrestaurant.services;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.javalite.test.jspec.JSpec.$;
 import static org.mockito.Mockito.mock;
 
 import java.util.List;
