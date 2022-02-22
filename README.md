@@ -82,7 +82,7 @@ Dummy
 Stub
     Renvoie une valeur fixe indépendante du test.
     Le plus souvent une valeur par défaut, sans signification métier.
-    Appeler une classe ou variable Stub indique aux autres que la valeur n’importe pas dans le cadre du test.
+    Appeler une classe ou   variable Stub indique aux autres que la valeur n’importe pas dans le cadre du test.
     Si l’issue du test dépend de la valeur, n’appelez pas cela un stub.
 
 Spy
