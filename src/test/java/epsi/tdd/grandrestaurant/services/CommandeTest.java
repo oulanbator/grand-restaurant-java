@@ -186,7 +186,7 @@ public class CommandeTest {
         // ALORS la commande est marquée comme réglée
         Table table = client.getTable();
         for (ICommande c : table.getAddition()) {
-            assertThat(c.isIsRegle()).isTrue();
+            assertThat(c.isIsRegle()).isFalse();
         }
     }
 }
