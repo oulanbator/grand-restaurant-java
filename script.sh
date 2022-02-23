@@ -9,21 +9,26 @@ cd grand-restaurant-java
 ### BRANCH ###
 echo "Choix de la branche.."
 git branch -a
-echo "Veuillez saisir la branche souhaitée :"
-isVerif=false
-while [ $isVerif = false ]
+choixValide=false
+while [ $choixValide = false ]
 do
+	echo "Veuillez saisir la branche souhaitée :"
 	read branche
 	success=$(git branch -a | grep $branche)
-	if [ $success != '' ]; then
+	
+	if [ "$success" != '' ]; then
+		git checkout $branche
 		echo "Bravo, vous êtes dans la branche : $branche"
-		isVerif=true
+		choixValide=true
+	# elif [ "$branche" == "main" ]; then
+	# 	echo "On reste sur la branche main"
+	# 	choixValide=true
+	# 	continue
 	else
 		echo "Désolé mauvaise saisie"
 		git branch -a
 	fi
 done
-git checkout $branche
 
 ### BUILD & TESTS ###
 echo "Build et tests du projet.."
@@ -49,10 +54,12 @@ do
 			errors=${7:0:1} # récupère premier chiffre du nombre d'erreurs
 			# Si échecs => set trigger à false
 			if [ $failures != '0' ]; then
+				echo "Echecs détectés : $target"
 				deployApp=false
 			fi
 			# Si erreurs => set trigger à false
 			if [ $errors != '0' ]; then
+				echo "Erreurs détectées : $target"
 				deployApp=false
 			fi
 		fi
@@ -70,5 +77,6 @@ fi
 
 ### CURL ###
 # curl une route de l'api
+
 sleep 10
 

@@ -184,9 +184,9 @@ public class CommandeTest {
         client.repasEstFini();
 
         // ALORS la commande est marquée comme réglée
-        Table table = client.getTable();
+        Table table = restaurant.getTables().get(0);
         for (ICommande c : table.getAddition()) {
-            assertThat(c.isIsRegle()).isFalse();
+            assertThat(c.isIsRegle()).isTrue();
         }
     }
 }

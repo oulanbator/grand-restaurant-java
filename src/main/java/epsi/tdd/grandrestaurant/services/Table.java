@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table implements ITable {
-    private List<Client> clients = new ArrayList<>();
+    private List<IClient> clients = new ArrayList<>();
     private List<ICommande> addition = new ArrayList<>();
     private IServeur serveurAffecte;
     private boolean isLibre;
 
     // METHODS
     @Override
-    public void affecterClient(Client client) {
+    public void affecterClient(IClient client) {
         this.clients.add(client);
         setLibre(false);
     }
@@ -31,7 +31,7 @@ public class Table implements ITable {
         this.serveurAffecte = serveur;
     }
 
-    public List<Client> getClients() {
+    public List<IClient> getClients() {
         return this.clients;
     }
 

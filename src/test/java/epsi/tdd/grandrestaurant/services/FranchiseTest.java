@@ -1,9 +1,10 @@
 package epsi.tdd.grandrestaurant.services;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import epsi.tdd.grandrestaurant.builders.CommandeBuilder;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -32,7 +33,9 @@ public class FranchiseTest {
 
         // QUAND tous les serveurs prennent une commande d'un montant Y (toujours égal à 1)
         double Y = 1;
-        Commande commande = new Commande(Y);
+        Commande commande = new CommandeBuilder()
+                .withMontant(Y)
+                .build();
 
         for (Serveur serveur : restaurant.getServeurs()) {
             serveur.prendreCommande(commande, mock(Table.class));
@@ -42,8 +45,6 @@ public class FranchiseTest {
         double expected = X * Y;
 
         assertThat(result).isEqualTo(expected);
-        // CAS(X = 0; X = 1; X = 2; X = 100)
-        // CAS(Y = 1.0)
     }
 
     /**
@@ -63,7 +64,7 @@ public class FranchiseTest {
         // ÉTANT DONNÉ une franchise ayant X restaurants de Y serveurs chacuns
         Franchise franchise = new Franchise();
         for (int i = 0; i < X; i++) {
-            Restaurant restaurant = franchise.newRestaurant();
+            franchise.newRestaurant();
         }
 
         franchise.getRestaurants().forEach(restaurant -> {
@@ -73,9 +74,11 @@ public class FranchiseTest {
         });
 
         // QUAND tous les serveurs prennent une commande d'un montant Z
-        Commande commande = new Commande();
         double Z = 1;
-        commande.setMontant(Z);
+        Commande commande = new CommandeBuilder()
+                .withMontant(Z)
+                .build();
+                
         franchise.getRestaurants().forEach(restaurant -> {
             restaurant.getServeurs().forEach(serveur -> {
                 serveur.prendreCommande(commande, mock(Table.class));

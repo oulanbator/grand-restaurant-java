@@ -1,7 +1,6 @@
 package epsi.tdd.grandrestaurant.services;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
 import epsi.tdd.grandrestaurant.doubles.ServeurDummy;
@@ -41,13 +40,11 @@ public class RestaurantTest {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
         Restaurant restaurant = new RestaurantBuilder()
                 .withTables(3)
+                .withServeurs(1)
                 .build();
 
-        // creer serveur et affecte table
-        Serveur serveur = restaurant.addNewServeur();
-
         int indexTable = 0;
-        restaurant.affecterServeurTable(indexTable, serveur);
+        restaurant.affecterServeurTable(indexTable, restaurant.getServeurs().get(0));
 
         // QUAND le service débute
         restaurant.startService();
@@ -55,14 +52,14 @@ public class RestaurantTest {
         // ALORS la table éditée est affectée au serveur et les deux autres au maître
         // Boucle sur les tables
         for (int i = 0; i < restaurant.getTables().size(); i++) {
-            // Recupère le serveur de la table
+            // Recupère le serveur de la table courante
             IServeur serveurDeLaTable = restaurant.getTables().get(i).getServeur();
             if (i == indexTable) {
-                Serveur leServeur = serveur;
-                assertThat(serveurDeLaTable).isEqualTo(leServeur);
+                Serveur serveur = restaurant.getServeurs().get(0);
+                assertThat(serveurDeLaTable).isEqualTo(serveur);
             } else {
-                Serveur leMaitreHotel = restaurant.getMaitreHotel();
-                assertThat(serveurDeLaTable).isEqualTo(leMaitreHotel);
+                Serveur maitreHotel = restaurant.getMaitreHotel();
+                assertThat(serveurDeLaTable).isEqualTo(maitreHotel);
             }
         }
     }
@@ -78,8 +75,6 @@ public class RestaurantTest {
         Restaurant restaurant = new RestaurantBuilder()
                 .withTables(3)
                 .build();
-        /* Serveur serveur = restaurant.addNewServeur(); */
-//        Serveur serveur = mock(Serveur.class);
 
         int indexTable = 0;
         restaurant.affecterServeurTable(indexTable, new ServeurDummy());
@@ -88,9 +83,7 @@ public class RestaurantTest {
         restaurant.startService();
 
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
-        Serveur serveurDummy = mock(Serveur.class);
-        assertThat(restaurant.affecterServeurTable(indexTable, new ServeurDummy()))
-                .as("il n'est pas possible de modifier le serveur affecté à la table").isFalse();
+        assertThat(restaurant.affecterServeurTable(indexTable, new ServeurDummy())).isFalse();
     }
 
     /**
@@ -104,10 +97,13 @@ public class RestaurantTest {
     @Test
     public void finDeService() {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(3);
-        Serveur serveur = restaurant.addNewServeur();
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(3)
+                .withServeurs(1)
+                .build();
+                
         int indexTableServeur = 0;
+        Serveur serveur = restaurant.getServeurs().get(0);
         restaurant.affecterServeurTable(indexTableServeur, serveur);
 
         // ET ayant débuté son service
@@ -123,15 +119,14 @@ public class RestaurantTest {
         // d'hôtel
         for (int i = 0; i < restaurant.getTables().size(); i++) {
             // Récupère le serveur de la table
-            IServeur result = restaurant.getTables().get(i).getServeur();
+            IServeur serveurDeLaTable = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
-                Serveur expected = serveur;
-                assertThat(result).isEqualTo(expected);
+                Serveur leServeur = serveur;
+                assertThat(serveurDeLaTable).isEqualTo(leServeur);
             } else {
-                Serveur expected = restaurant.getMaitreHotel();
-                assertThat(result).isEqualTo(expected);
+                Serveur leMaitreHotel = restaurant.getMaitreHotel();
+                assertThat(serveurDeLaTable).isEqualTo(leMaitreHotel);
             }
         }
     }
-
 }

@@ -1,11 +1,12 @@
 package epsi.tdd.grandrestaurant.services;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.javalite.test.jspec.JSpec.$;
-import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+
+import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.doubles.ClientDummy;
 
 public class TableTest {
 
@@ -17,14 +18,14 @@ public class TableTest {
     @Test
     public void tableOccupee() {
         // ÉTANT DONNE une table dans un restaurant ayant débuté son service
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(2);
-        restaurant.startService();
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(2)
+                .withServiceStarted()
+                .build();
 
         // QUAND un client est affecté à une table
-        Client clientDummy = mock(Client.class);
         Table tableCiblee = restaurant.getTables().get(0);
-        tableCiblee.affecterClient(clientDummy);
+        tableCiblee.affecterClient(new ClientDummy());
 
         // ALORS cette table n'est plus sur la liste des tables libres du restaurant
         List<Table> tablesLibres = restaurant.getTablesLibres();
@@ -40,13 +41,13 @@ public class TableTest {
     public void tableLiberee() {
         // ÉTANT DONNE une table dans un restaurant *ayant débuté son service*, occupée
         // par un client
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(2);
-        restaurant.startService();
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(2)
+                .withServiceStarted()
+                .build();
 
-        Client clientDummy = mock(Client.class);
         Table tableCiblee = restaurant.getTables().get(0);
-        tableCiblee.affecterClient(clientDummy);
+        tableCiblee.affecterClient(new ClientDummy());
 
         // QUAND la table est libérée
         tableCiblee.liberer();
@@ -65,10 +66,11 @@ public class TableTest {
     @Test
     public void entreeClient() {
         // ETANT DONNE un restaurant
-        Restaurant restaurant = new Restaurant();
         int tablesLibresInitiales = 3;
-        restaurant.createTables(tablesLibresInitiales);
-        restaurant.startService();
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(tablesLibresInitiales)
+                .withServiceStarted()
+                .build();
 
         // QUAND un client entre
         Client client = new Client("Vladimir Poutine");
@@ -78,7 +80,8 @@ public class TableTest {
         // TODO : utiliser un spy ici ?
         int nbTablesLibres = restaurant.getTablesLibres().size();
         Table tableOccupee = restaurant.getTablesOccupees().get(0);
-        assertThat(nbTablesLibres == (tablesLibresInitiales - 1) &&
-                tableOccupee.getClients().get(0) == client);
+
+        assertThat(nbTablesLibres == (tablesLibresInitiales - 1) 
+                && tableOccupee.getClients().get(0) == client).isTrue();
     }
 }

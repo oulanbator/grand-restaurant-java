@@ -1,6 +1,6 @@
 package epsi.tdd.grandrestaurant.services;
 
-public class Client {
+public class Client implements IClient {
     private String name;
     private Table table;
     

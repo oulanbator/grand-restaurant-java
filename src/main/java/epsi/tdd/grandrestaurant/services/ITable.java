@@ -3,7 +3,7 @@ package epsi.tdd.grandrestaurant.services;
 import java.util.List;
 
 public interface ITable {
-    void affecterClient(Client client);
+    void affecterClient(IClient client);
     void passeCommande(ICommande commande);
     List<ICommande> getAddition();
 }
