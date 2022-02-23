@@ -15,6 +15,11 @@ public class Franchise {
         return restaurant;
     }
 
+    public void addRestaurant(Restaurant restaurant) {
+        restaurant.setMenu(menu);
+        restaurants.add(restaurant);
+    }
+
     public Restaurant newFiliale() {
         Restaurant restaurant = newRestaurant();
         restaurant.setFiliale(true);

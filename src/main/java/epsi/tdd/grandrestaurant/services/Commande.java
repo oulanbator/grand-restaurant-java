@@ -4,7 +4,7 @@ import java.util.Date;
 
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
-public class Commande {
+public class Commande implements ICommande {
     TypeCommande typeCommande;
     Table table;
     double montant;
@@ -79,7 +79,7 @@ public class Commande {
     }
 
     public boolean isVersGendarmerie() {
-        return versGendarmerie;
+        return this.versGendarmerie;
     }
 
     public void setVersGendarmerie(boolean versGendarmerie) {

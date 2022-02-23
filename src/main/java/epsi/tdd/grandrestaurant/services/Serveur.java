@@ -3,8 +3,8 @@ package epsi.tdd.grandrestaurant.services;
 import java.util.Calendar;
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
-public class Serveur {
-    private Restaurant restaurant;
+public class Serveur implements IServeur {
+    private IRestaurant restaurant;
     private boolean isMaitreHotel = false;
     private double chiffreAffaires;
 
@@ -13,7 +13,8 @@ public class Serveur {
         this.chiffreAffaires = 0;
     }
 
-    public void prendreCommande(Commande commande, Table table) {
+    @Override
+    public void prendreCommande(ICommande commande, ITable table) {
         restaurant.addCommande(commande);
         table.getAddition().add(commande);
 
@@ -29,13 +30,14 @@ public class Serveur {
         this.chiffreAffaires += commande.getMontant();
     }
 
-    private void prendreCommandeNourriture(Commande commande) {
+    private void prendreCommandeNourriture(ICommande commande) {
         restaurant.addCommandeNourriture(commande);
     }
 
-    private void prendreCommandeBoissons(Commande commande) {
+    private void prendreCommandeBoissons(ICommande commande) {
     }
 
+    @Override
     public void commandeIsPaid(Commande commande, boolean estPaye) {
         // Epinglage de la commande (ou non)
         if (!estPaye) {
@@ -47,6 +49,7 @@ public class Serveur {
 
     // GETTERS & SETTERS
 
+    @Override
     public boolean isMaitreHotel() {
         return isMaitreHotel;
     }
@@ -55,7 +58,7 @@ public class Serveur {
         this.isMaitreHotel = isMaitreHotel;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
+    public void setRestaurant(IRestaurant restaurant) {
         this.restaurant = restaurant;
     }
 
@@ -63,4 +66,7 @@ public class Serveur {
         return this.chiffreAffaires;
     }
 
+    public Restaurant getRestaurant() {
+        return (Restaurant) this.restaurant;
+    }
 }

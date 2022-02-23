@@ -27,7 +27,7 @@ public class ServeurTest {
 
         // ALORS cette commande apparaît dans la liste de tâches de la cuisine de ce
         // restaurant
-        List<Commande> tachesCuisine = restaurant.getTachesCuisine();
+        List<ICommande> tachesCuisine = restaurant.getTachesCuisine();
         assertThat(tachesCuisine)
                 .as("cette commande apparaît dans la liste de tâches de la cuisine de ce restaurant")
                 .contains(commande);
@@ -51,7 +51,7 @@ public class ServeurTest {
 
         // ALORS cette commande n'apparaît pas dans la liste de tâches de la cuisine de
         // ce restaurant
-        List<Commande> tachesCuisine = restaurant.getTachesCuisine();
+        List<ICommande> tachesCuisine = restaurant.getTachesCuisine();
         assertThat(commande)
                 .as("cette commande n'apparaît pas dans la liste de tâches de la cuisine de ce restaurant")
                 .isNotIn(tachesCuisine);

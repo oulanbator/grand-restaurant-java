@@ -8,8 +8,10 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
+import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.builders.ServeurBuilder;
+import epsi.tdd.grandrestaurant.builders.TableBuilder;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 public class CommandeTest {
     /**
@@ -20,18 +22,16 @@ public class CommandeTest {
     @Test
     public void commandeEpinglee() {
         // ÉTANT DONNE un serveur ayant pris une commande
-        // Serveur serveur = new Serveur();
-        Serveur serveur = Mockito.mock(Serveur.class);
-        serveur.setRestaurant(mock(Restaurant.class));
         Commande commande = new Commande();
-
-        serveur.prendreCommande(commande, mock(Table.class));
+        Serveur serveur = new ServeurBuilder()
+                .withCommande(commande, mock(Table.class))
+                .build();
 
         // QUAND il la déclare comme non-payée
         serveur.commandeIsPaid(commande, false);
 
         // ALORS cette commande est marquée comme épinglée
-        assertThat(commande.isEpinglee());
+        assertThat(commande.isEpinglee()).isTrue();
     }
 
     /**
@@ -42,20 +42,23 @@ public class CommandeTest {
     @Test
     public void transmissionGendarmerie() throws ParseException {
         // ÉTANT DONNE un serveur ayant épinglé une commande
-        Restaurant restaurant = new Restaurant();
-        Serveur serveur = restaurant.addNewServeur();
         Commande commande = new Commande();
-        serveur.prendreCommande(commande, mock(Table.class));
+        Serveur serveur = new ServeurBuilder()
+                .withCommande(commande, mock(Table.class))
+                .build();
+
         serveur.commandeIsPaid(commande, false); // Epingle la commande si inpayé(false)
 
         // QUAND elle date d'il y a au moins 15 jours
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -15); // Calculer la date limite (15 jours)
+        calendar.add(Calendar.DATE, -16); // Calculer la date limite (15 jours)
         commande.setDateEpinglage(calendar.getTime());
 
+        // ET que les commandes à transmettre ont été listées par le serveur
+        serveur.getRestaurant().listerCommandesATransmettreGendarmerie();
+
         // ALORS cette commande est marquée comme à transmettre gendarmerie
-        restaurant.listerCommandesATransmettreGendarmerie();
-        assertThat(commande.isVersGendarmerie() == true);
+        assertThat(commande.isVersGendarmerie()).isTrue();
     }
 
     /**
@@ -66,17 +69,17 @@ public class CommandeTest {
     @Test
     public void listeATransmettre() {
         // ÉTANT DONNE une commande à transmettre gendarmerie
-        Restaurant chezGaston = new Restaurant();
         Commande commandeATransmettre = mock(Commande.class);
-        chezGaston.addCommandeTransmettre(commandeATransmettre);
-        commandeATransmettre.setVersGendarmerie(true);
+        Restaurant restaurant = new RestaurantBuilder()
+                .withCommandeATransmettre(commandeATransmettre)
+                .build();
 
         // QUAND on consulte la liste des commandes à transmettre du restaurant
-        List<Commande> listeCommandes = chezGaston.getaTansmettre();
+        List<ICommande> listeCommandes = restaurant.getaTansmettre();
 
         // ALORS elle y figure
         // Boucle sur les commandes
-        assertThat(listeCommandes.contains(commandeATransmettre));
+        assertThat(listeCommandes.contains(commandeATransmettre)).isTrue();
     }
 
     /**
@@ -88,16 +91,16 @@ public class CommandeTest {
     @Test
     public void transmiseGendarmerie() {
         // ÉTANT DONNE une commande à transmettre gendarmerie
-        Restaurant chezGaston = new Restaurant();
-        Commande commande = mock(Commande.class);
-        chezGaston.addCommandeTransmettre(commande);
+        Commande commandeATransmettre = mock(Commande.class);
+        Restaurant restaurant = new RestaurantBuilder()
+                .withCommandeATransmettre(commandeATransmettre)
+                .build();
 
         // QUAND elle est marquée comme transmise à la gendarmerie
-        chezGaston.transmettreCommandesGendarmerie();
+        restaurant.transmettreCommandesGendarmerie();
 
-        // ALORS elle ne figure plus dans la liste des commandes à transmettre du
-        // restaurant
-        assertThat(chezGaston.getaTansmettre().contains(commande));
+        // ALORS elle ne figure plus dans la liste des commandes à transmettre du restaurant
+        assertThat(restaurant.getaTansmettre().contains(commandeATransmettre)).isFalse();
     }
 
     /**
@@ -108,22 +111,25 @@ public class CommandeTest {
     @Test
     public void noteFinale() {
         // ETANT DONNE un restaurant avec des clients à une table
-        Restaurant restaurant = new Restaurant();
-        Serveur serveur = restaurant.addNewServeur();
-        restaurant.createTables(2);
-        Table table = restaurant.getTables().get(0);
-        table.setServeur(serveur);
-        restaurant.startService(); // Inutile ?
+        Restaurant restaurant = new RestaurantBuilder()
+                .withServeurs(1)
+                .withTables(2)
+                .build();
 
-        // QUAND les clients passent commande de nourriture et de boissons auprès du
-        // serveur
-        Commande commandeNourriture = mock(Commande.class);
-        Commande commandeBoissons = mock(Commande.class);
+        Table table = new TableBuilder()
+                .withServeur(restaurant.getServeurs().get(0))
+                .build();
+
+
+        // QUAND les clients passent commande de nourriture et de boissons auprès du serveur
+        ICommande commandeNourriture = mock(Commande.class);
+        ICommande commandeBoissons = mock(Commande.class);
         table.passeCommande(commandeNourriture);
         table.passeCommande(commandeBoissons);
 
         // ALORS tout est noté en vue de la note finale
-        assertThat(table.getAddition().contains(commandeNourriture) && table.getAddition().contains(commandeBoissons));
+        assertThat(table.getAddition().contains(commandeNourriture)
+                && table.getAddition().contains(commandeBoissons)).isTrue();
     }
 
     /**
@@ -135,12 +141,14 @@ public class CommandeTest {
     @Test
     public void commandeExtras() {
         // ETANT DONNE un restaurant avec des clients à une table
-        Restaurant restaurant = new Restaurant();
-        Serveur serveur = restaurant.addNewServeur();
-        restaurant.createTables(2);
-        Table table = restaurant.getTables().get(0);
-        table.setServeur(serveur);
-        restaurant.startService(); // Inutile ?
+        Restaurant restaurant = new RestaurantBuilder()
+                .withServeurs(1)
+                .withTables(2)
+                .build();
+
+        Table table = new TableBuilder()
+                .withServeur(restaurant.getServeurs().get(0))
+                .build();
 
         // ET les clients ayant déjà passé commande
         Commande premiereCommande = mock(Commande.class);
@@ -151,7 +159,8 @@ public class CommandeTest {
         table.passeCommande(commandeExtras);
 
         // ALORS le serveur ajoute les nouvelles commandes à l'addition
-        assertThat(table.getAddition().contains(commandeExtras));
+        assertThat(table.getAddition().contains(premiereCommande)
+                && table.getAddition().contains(commandeExtras)).isTrue();
     }
 
     // ETANT DONNE un restaurant avec des clients ayant commandé
@@ -161,20 +170,23 @@ public class CommandeTest {
     @Test
     public void repasFini() {
         // ETANT DONNE un restaurant avec des clients ayant commandé
-        Restaurant restaurant = new Restaurant();
-        Commande commande = Mockito.mock(Commande.class);
-        restaurant.createTables(1);
-        restaurant.startService();
-        Client client = new Client("Vladimir Poutine");
-        restaurant.entreeClient(client);
-        client.getTable().passeCommande(commande);
+        Client client = new Client();
+
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(1)
+                .withServiceStarted()
+                .withClient(client)
+                .build();
+
+        client.getTable().passeCommande(new Commande());
 
         // QUAND les clients ont terminé leur repas
         client.repasEstFini();
+
         // ALORS la commande est marquée comme réglée
-        Table table = restaurant.getTables().get(0);
-        for (Commande c : table.getAddition()) {
-            assertThat(c.isIsRegle());
+        Table table = client.getTable();
+        for (ICommande c : table.getAddition()) {
+            assertThat(c.isIsRegle()).isTrue();
         }
     }
 }

@@ -2,6 +2,9 @@ package epsi.tdd.grandrestaurant.services;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+
+import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.doubles.ServeurDummy;
 import org.junit.jupiter.api.Test;
 
 public class RestaurantTest {
@@ -13,10 +16,15 @@ public class RestaurantTest {
      */
     @Test
     public void affecteTablesMaitreHotel() {
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(3);
+        //ÉTANT DONNE un restaurant ayant 3 tables
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(3)
+                .build();
+
+        //QUAND le service commence
         restaurant.startService();
 
+        //ALORS elles sont toutes affectées au Maître d'Hôtel
         for (Table table : restaurant.getTables()) {
             assertThat(table.getServeur().isMaitreHotel());
         }
@@ -31,13 +39,15 @@ public class RestaurantTest {
     @Test
     public void affecteTableServeur() {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(3);
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(3)
+                .build();
+
         // creer serveur et affecte table
         Serveur serveur = restaurant.addNewServeur();
 
-        int indexTableServeur = 0;
-        restaurant.affecterServeurTable(indexTableServeur, serveur);
+        int indexTable = 0;
+        restaurant.affecterServeurTable(indexTable, serveur);
 
         // QUAND le service débute
         restaurant.startService();
@@ -46,14 +56,13 @@ public class RestaurantTest {
         // Boucle sur les tables
         for (int i = 0; i < restaurant.getTables().size(); i++) {
             // Recupère le serveur de la table
-            Serveur result = restaurant.getTables().get(i).getServeur();
-            if (i == indexTableServeur) {
-                Serveur expected = serveur;
-                assertThat(result).isEqualTo(expected);
-                assertThat(result).isEqualTo(expected);
+            IServeur serveurDeLaTable = restaurant.getTables().get(i).getServeur();
+            if (i == indexTable) {
+                Serveur leServeur = serveur;
+                assertThat(serveurDeLaTable).isEqualTo(leServeur);
             } else {
-                Serveur expected = restaurant.getMaitreHotel();
-                assertThat(result).isEqualTo(expected);
+                Serveur leMaitreHotel = restaurant.getMaitreHotel();
+                assertThat(serveurDeLaTable).isEqualTo(leMaitreHotel);
             }
         }
     }
@@ -66,20 +75,21 @@ public class RestaurantTest {
     @Test
     public void modifieAffectation() {
         // ÉTANT DONNÉ un restaurant ayant 3 tables dont une affectée à un serveur
-        Restaurant restaurant = new Restaurant();
-        restaurant.createTables(3);
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(3)
+                .build();
         /* Serveur serveur = restaurant.addNewServeur(); */
-        Serveur serveur = mock(Serveur.class);
+//        Serveur serveur = mock(Serveur.class);
 
         int indexTable = 0;
-        restaurant.affecterServeurTable(indexTable, serveur);
+        restaurant.affecterServeurTable(indexTable, new ServeurDummy());
 
         // QUAND le service débute
         restaurant.startService();
 
         // ALORS il n'est pas possible de modifier le serveur affecté à la table
         Serveur serveurDummy = mock(Serveur.class);
-        assertThat(restaurant.affecterServeurTable(indexTable, serveurDummy))
+        assertThat(restaurant.affecterServeurTable(indexTable, new ServeurDummy()))
                 .as("il n'est pas possible de modifier le serveur affecté à la table").isFalse();
     }
 
@@ -113,7 +123,7 @@ public class RestaurantTest {
         // d'hôtel
         for (int i = 0; i < restaurant.getTables().size(); i++) {
             // Récupère le serveur de la table
-            Serveur result = restaurant.getTables().get(i).getServeur();
+            IServeur result = restaurant.getTables().get(i).getServeur();
             if (i == indexTableServeur) {
                 Serveur expected = serveur;
                 assertThat(result).isEqualTo(expected);

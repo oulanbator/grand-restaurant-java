@@ -5,13 +5,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class Restaurant {
+public class Restaurant implements IRestaurant {
     private Serveur maitreHotel;
     private List<Table> tables = new ArrayList<>();
     private List<Serveur> serveurs = new ArrayList<>();
-    private List<Commande> commandesPrises = new ArrayList<>();
-    private List<Commande> tachesCuisine = new ArrayList<>();
-    private List<Commande> aTansmettre = new ArrayList<>();
+    private List<ICommande> commandesPrises = new ArrayList<>();
+    private List<ICommande> tachesCuisine = new ArrayList<>();
+    private List<ICommande> aTansmettre = new ArrayList<>();
     private List<Plat> menu = new ArrayList<>();
     private boolean serviceEnCours = false;
     private boolean isFiliale;
@@ -28,6 +28,7 @@ public class Restaurant {
         }
     }
 
+    @Override
     public void addPlatToMenu(Plat plat) {
         Plat platRestaurant = new Plat(plat.getId(), plat.getPrix());
         this.menu.add(platRestaurant);
@@ -41,6 +42,7 @@ public class Restaurant {
         this.maitreHotel = serveur;
     }
 
+    @Override
     public void createTables(int nbTables) {
         for (int i = 0; i < nbTables; i++) {
             Table newTable = new Table();
@@ -48,6 +50,7 @@ public class Restaurant {
         }
     }
 
+    @Override
     public void startService() {
         // Affecte tables au maitre d'hôtel
         for (Table table : tables) {
@@ -58,11 +61,13 @@ public class Restaurant {
         serviceEnCours = true;
     }
 
+    @Override
     public void stopService() {
         //
         serviceEnCours = false;
     }
 
+    @Override
     public Serveur addNewServeur() {
         Serveur serveur = new Serveur();
         serveur.setRestaurant(this);
@@ -73,6 +78,7 @@ public class Restaurant {
     // public void creerServeurs(int nbServeurs) {
     // }
 
+    @Override
     public List<Table> getTablesLibres() {
         List<Table> tablesLibres = new ArrayList<>();
         for (Table table : this.tables) {
@@ -83,8 +89,9 @@ public class Restaurant {
         return tablesLibres;
     }
 
-    // Affecte un serveur à la table
-    public boolean affecterServeurTable(int indexTable, Serveur serveur) {
+
+    @Override
+    public boolean affecterServeurTable(int indexTable, IServeur serveur) {
         Table table = tables.get(indexTable);
         if (serviceEnCours) {
             return false;
@@ -94,14 +101,18 @@ public class Restaurant {
         }
     }
 
+    @Override
     public void listerCommandesATransmettreGendarmerie() {
-        for (Commande commande : commandesPrises) {
+        for (ICommande commande : commandesPrises) {
+            System.out.println(commande);
             if (commande.isEpinglee()) {
+                System.out.println("épinglée");
                 long dateEpinglage = commande.getDateEpinglage().getTime();
                 long calendar = Calendar.getInstance().getTime().getTime();
                 long diff = calendar - dateEpinglage;
                 float res = (diff / (1000 * 60 * 60 * 24));
                 if (res >= 15) {
+                    System.out.println(">=15");
                     commande.setVersGendarmerie(true);
                     aTansmettre.add(commande);
                 }
@@ -109,24 +120,27 @@ public class Restaurant {
         }
     }
 
+    @Override
     public void transmettreCommandesGendarmerie() {
-        List<Commande> commandesATransmettre = new ArrayList<Commande>(aTansmettre);
-        for (Commande commande : commandesATransmettre) {
+        List<ICommande> commandesATransmettre = new ArrayList<>(aTansmettre);
+        for (ICommande commande : commandesATransmettre) {
             commande.setbTransmise(true);
             aTansmettre.remove(commande);
         }
     }
 
     // GETTERS & SETTERS
-    public List<Commande> getTachesCuisine() {
+    public List<ICommande> getTachesCuisine() {
         return this.tachesCuisine;
     }
 
-    public void addCommandeNourriture(Commande commande) {
+    @Override
+    public void addCommandeNourriture(ICommande commande) {
         this.tachesCuisine.add(commande);
     }
 
-    public void addCommande(Commande commande) {
+    @Override
+    public void addCommande(ICommande commande) {
         this.commandesPrises.add(commande);
     }
 
@@ -139,7 +153,7 @@ public class Restaurant {
         return this.tables;
     }
 
-    public List<Commande> getaTansmettre() {
+    public List<ICommande> getaTansmettre() {
         return aTansmettre;
     }
 
@@ -151,7 +165,7 @@ public class Restaurant {
         return this.maitreHotel;
     }
 
-    public List<Commande> getCommandesPrises() {
+    public List<ICommande> getCommandesPrises() {
         return commandesPrises;
     }
 
@@ -179,8 +193,8 @@ public class Restaurant {
 
     public void entreeClient(Client client) {
         Table table = getTablesLibres().get(0);
-        client.setTable(table);
         table.affecterClient(client);
+        client.setTable(table);
     }
 
     public List<Table> getTablesOccupees() {
@@ -192,4 +206,9 @@ public class Restaurant {
         }
         return tablesOccupees;
     }
+
+    public void setMenu(List<Plat> menu) {
+        this.menu = menu;
+    }
+
 }

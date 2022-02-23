@@ -14,17 +14,18 @@ public class Client {
     public String getName() {
         return this.name;
     }
+
     public void repasEstFini(){
-       for(Commande commande : table.getAddition()){
+       for(ICommande commande : table.getAddition()){
            commande.setIsRegle(true);
        }
     }
 
-    void setTable(Table table) {
-        this.table = table;
+    void setTable(Table t) {
+        this.table = t;
     }
 
     public Table getTable() {
-       return this.table; 
+       return this.table;
     }
 }
