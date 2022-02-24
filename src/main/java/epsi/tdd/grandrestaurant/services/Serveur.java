@@ -4,6 +4,7 @@ import java.util.Calendar;
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class Serveur implements IServeur {
+    private Long id;
     private IRestaurant restaurant;
     private boolean isMaitreHotel = false;
     private double chiffreAffaires;
@@ -68,5 +69,13 @@ public class Serveur implements IServeur {
 
     public Restaurant getRestaurant() {
         return (Restaurant) this.restaurant;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

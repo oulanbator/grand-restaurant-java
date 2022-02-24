@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table implements ITable {
+    private Long id;
     private List<IClient> clients = new ArrayList<>();
     private List<ICommande> addition = new ArrayList<>();
     private IServeur serveurAffecte;
@@ -50,5 +51,13 @@ public class Table implements ITable {
 
     public void setLibre(boolean libre) {
         isLibre = libre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Restaurant implements IRestaurant {
+    private Long id;
     private Serveur maitreHotel;
     private List<Table> tables = new ArrayList<>();
     private List<Serveur> serveurs = new ArrayList<>();
@@ -207,8 +208,19 @@ public class Restaurant implements IRestaurant {
         return tablesOccupees;
     }
 
+    public boolean isServiceEnCours() {
+        return serviceEnCours;
+    }
+
     public void setMenu(List<Plat> menu) {
         this.menu = menu;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
