@@ -4,7 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import epsi.tdd.grandrestaurant.builders.CommandeBuilder;
+import epsi.tdd.grandrestaurant.services.builders.CommandeBuilder;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;

@@ -8,6 +8,7 @@ import epsi.tdd.grandrestaurant.api.service.ApiServeurService;
 import epsi.tdd.grandrestaurant.api.service.ApiTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -40,4 +41,12 @@ public class RestaurantController {
         return apiTableService.getAllTables();
     }
 
+    @GetMapping("restaurant/tables")
+    public Iterable<TableEntity> getTablesRestaurant(@RequestParam int restauId) {
+        return apiRestaurantService.getTablesRestaurant(restauId);
+    }
+    @GetMapping("restaurant/serveurs")
+    public Iterable<ServeurEntity> getServeursRestaurant(@RequestParam int restauId) {
+        return apiRestaurantService.getServeursRestaurant(restauId);
+    }
 }

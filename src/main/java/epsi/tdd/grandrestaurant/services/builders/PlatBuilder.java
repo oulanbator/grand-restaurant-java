@@ -1,4 +1,4 @@
-package epsi.tdd.grandrestaurant.builders;
+package epsi.tdd.grandrestaurant.services.builders;
 
 import epsi.tdd.grandrestaurant.services.Plat;
 
@@ -9,12 +9,12 @@ public class PlatBuilder {
         this.plat = new Plat();
     }
 
-    public PlatBuilder withName(String name) {
+    public epsi.tdd.grandrestaurant.services.builders.PlatBuilder withName(String name) {
         this.plat.setId(name);
         return this;
     }
 
-    public PlatBuilder withPrixInitial(double prix) {
+    public epsi.tdd.grandrestaurant.services.builders.PlatBuilder withPrixInitial(double prix) {
         this.plat.setPrix(prix);
         return this;
     } 

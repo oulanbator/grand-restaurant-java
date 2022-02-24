@@ -1,4 +1,4 @@
-package epsi.tdd.grandrestaurant.builders;
+package epsi.tdd.grandrestaurant.services.builders;
 
 import epsi.tdd.grandrestaurant.services.Client;
 import epsi.tdd.grandrestaurant.services.Commande;
@@ -35,6 +35,13 @@ public class RestaurantBuilder {
 
     public RestaurantBuilder withServiceStarted() {
         this.restaurant.startService();
+        return this;
+    }
+
+    public RestaurantBuilder withFilialeStatus(boolean isFiliale) {
+        if (isFiliale) {
+            this.restaurant.setFiliale(true);
+        }
         return this;
     }
 

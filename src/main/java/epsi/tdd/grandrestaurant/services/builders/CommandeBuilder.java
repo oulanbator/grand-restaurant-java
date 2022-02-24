@@ -1,4 +1,4 @@
-package epsi.tdd.grandrestaurant.builders;
+package epsi.tdd.grandrestaurant.services.builders;
 
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 import epsi.tdd.grandrestaurant.services.Commande;
@@ -10,12 +10,12 @@ public class CommandeBuilder {
         this.commande = new Commande();
     }
 
-    public CommandeBuilder withType(TypeCommande type) {
+    public epsi.tdd.grandrestaurant.services.builders.CommandeBuilder withType(TypeCommande type) {
         this.commande.setTypeCommande(type);
         return this;
     }
 
-    public CommandeBuilder withMontant(double montant) {
+    public epsi.tdd.grandrestaurant.services.builders.CommandeBuilder withMontant(double montant) {
         this.commande.setMontant(montant);
         return this;
     }

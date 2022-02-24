@@ -1,4 +1,4 @@
-package epsi.tdd.grandrestaurant.builders;
+package epsi.tdd.grandrestaurant.services.builders;
 
 import epsi.tdd.grandrestaurant.services.Serveur;
 import epsi.tdd.grandrestaurant.services.Table;
@@ -10,7 +10,7 @@ public class TableBuilder {
         this.table = new Table();
     }
 
-    public TableBuilder withServeur(Serveur serveur) {
+    public epsi.tdd.grandrestaurant.services.builders.TableBuilder withServeur(Serveur serveur) {
         this.table.setServeur(serveur);
         return this;
     }

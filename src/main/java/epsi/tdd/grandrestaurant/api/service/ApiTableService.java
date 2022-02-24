@@ -21,17 +21,19 @@ public class ApiTableService {
     @Transactional
     public TableEntity buildTableEntity(Table table) {
         TableEntity eTable = new TableEntity();
-        eTable.setId(table.getId());
-        eTable.setLibre(table.isLibre());
-        // Serveur
-        Optional<ServeurEntity> optServeur = apiServeurService.getServeurById(table.getServeur().getId());
-        if (optServeur.isPresent()) {
-            eTable.setServeurAffecte(optServeur.get());
-        } else {
-            ServeurEntity eServeur = apiServeurService.buildServeurEntity(table.getServeur());
-            eServeur.getTables().add(eTable);
-            eTable.setServeurAffecte(eServeur);
+        if (table.getId() != null) {
+            eTable.setId(table.getId());
         }
+        eTable.setLibre(table.isLibre());
+//        // Serveur
+//        Optional<ServeurEntity> optServeur = apiServeurService.getServeurById(table.getServeur().getId());
+//        if (optServeur.isPresent()) {
+//            eTable.setServeurAffecte(optServeur.get());
+//        } else {
+//            ServeurEntity eServeur = apiServeurService.buildServeurEntity(table.getServeur());
+//            eServeur.getTables().add(eTable);
+//            eTable.setServeurAffecte(eServeur);
+//        }
         return eTable;
     }
 

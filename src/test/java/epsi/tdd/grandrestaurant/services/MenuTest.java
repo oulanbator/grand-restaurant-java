@@ -2,7 +2,7 @@ package epsi.tdd.grandrestaurant.services;
 
 import org.junit.jupiter.api.Test;
 
-import epsi.tdd.grandrestaurant.builders.PlatBuilder;
+import epsi.tdd.grandrestaurant.services.builders.PlatBuilder;
 
 import static org.assertj.core.api.Assertions.*;
 

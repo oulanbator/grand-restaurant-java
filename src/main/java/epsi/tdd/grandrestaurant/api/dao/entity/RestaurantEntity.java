@@ -1,5 +1,7 @@
 package epsi.tdd.grandrestaurant.api.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +12,11 @@ public class RestaurantEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToMany( targetEntity=TableEntity.class, mappedBy="restaurant" )
     private List<TableEntity> tables = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany( targetEntity=ServeurEntity.class, mappedBy="restaurant" )
     private List<ServeurEntity> serveurs = new ArrayList<>();
 

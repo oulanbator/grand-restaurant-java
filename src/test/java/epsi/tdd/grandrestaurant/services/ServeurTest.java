@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-import epsi.tdd.grandrestaurant.builders.CommandeBuilder;
-import epsi.tdd.grandrestaurant.builders.ServeurBuilder;
+import epsi.tdd.grandrestaurant.services.builders.CommandeBuilder;
+import epsi.tdd.grandrestaurant.services.builders.ServeurBuilder;
 import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class ServeurTest {

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.services.builders.RestaurantBuilder;
 import epsi.tdd.grandrestaurant.doubles.ClientDummy;
 
 public class TableTest {

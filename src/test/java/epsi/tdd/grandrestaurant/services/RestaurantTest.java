@@ -2,7 +2,7 @@ package epsi.tdd.grandrestaurant.services;
 
 import static org.assertj.core.api.Assertions.*;
 
-import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.services.builders.RestaurantBuilder;
 import epsi.tdd.grandrestaurant.doubles.ServeurDummy;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ public class RestaurantTest {
         Restaurant restaurant = new RestaurantBuilder()
                 .withTables(3)
                 .build();
-
+        
         //QUAND le service commence
         restaurant.startService();
 

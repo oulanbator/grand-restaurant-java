@@ -24,16 +24,18 @@ public class ApiServeurService {
         ServeurEntity eServeur = new ServeurEntity();
         eServeur.setMaitreHotel(serveur.isMaitreHotel());
         eServeur.setChiffreAffaires(serveur.getChiffreAffaires());
-        eServeur.setId(serveur.getId());
-        // Restaurant
-        Optional<RestaurantEntity> optRestaurant = apiRestaurantService.getRestaurantById(serveur.getRestaurant().getId());
-        if (optRestaurant.isPresent()) {
-            eServeur.setRestaurant(optRestaurant.get());
-        } else {
-            RestaurantEntity eRestaurant = apiRestaurantService.buildRestaurantEntity(serveur.getRestaurant());
-            eRestaurant.getServeurs().add(eServeur);
-            eServeur.setRestaurant(eRestaurant);
+        if (serveur.getId() != null) {
+            eServeur.setId(serveur.getId());
         }
+//        // Restaurant
+//        Optional<RestaurantEntity> optRestaurant = apiRestaurantService.getRestaurantById(serveur.getRestaurant().getId());
+//        if (optRestaurant.isPresent()) {
+//            eServeur.setRestaurant(optRestaurant.get());
+//        } else {
+//            RestaurantEntity eRestaurant = apiRestaurantService.buildRestaurantEntity(serveur.getRestaurant());
+//            eRestaurant.getServeurs().add(eServeur);
+//            eServeur.setRestaurant(eRestaurant);
+//        }
         return eServeur;
     }
 

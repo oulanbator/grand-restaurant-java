@@ -7,10 +7,12 @@ import epsi.tdd.grandrestaurant.api.dao.repository.RestaurantRepository;
 import epsi.tdd.grandrestaurant.services.Restaurant;
 import epsi.tdd.grandrestaurant.services.Serveur;
 import epsi.tdd.grandrestaurant.services.Table;
+import epsi.tdd.grandrestaurant.services.builders.RestaurantBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,33 +24,10 @@ public class ApiRestaurantService {
     @Autowired
     private ApiTableService apiTableService;
 
-    @Transactional
     public RestaurantEntity buildRestaurantEntity(Restaurant restaurant) {
         RestaurantEntity eRestaurant = new RestaurantEntity();
         eRestaurant.setFiliale(restaurant.isFiliale());
         eRestaurant.setServiceEnCours(restaurant.isServiceEnCours());
-        // Serveurs
-        for (Serveur serveur : restaurant.getServeurs()) {
-            Optional<ServeurEntity> optServeur = apiServeurService.getServeurById(serveur.getId());
-            if (optServeur.isPresent()) {
-                eRestaurant.getServeurs().add(optServeur.get());
-            } else {
-                ServeurEntity eServeur = apiServeurService.buildServeurEntity(serveur);
-                eServeur.setRestaurant(eRestaurant);
-                eRestaurant.getServeurs().add(eServeur);
-            }
-        }
-        // Tables
-        for (Table table : restaurant.getTables()) {
-            Optional<TableEntity> optTable = apiTableService.getTableById(table.getId());
-            if (optTable.isPresent()) {
-                eRestaurant.getTables().add(optTable.get());
-            } else {
-                TableEntity eTable = apiTableService.buildTableEntity(table);
-                eTable.setRestaurant(eRestaurant);
-                eRestaurant.getTables().add(eTable);
-            }
-        }
         return eRestaurant;
     }
 
@@ -65,20 +44,58 @@ public class ApiRestaurantService {
         return this.restaurantRepository.save(restaurant);
     }
 
+    @Transactional
     public void createRestaurantPool() {
-        RestaurantEntity restaurant1 = new RestaurantEntity();
-        restaurant1.setFiliale(true);
-        restaurant1.setServiceEnCours(false);
-        saveRestaurant(restaurant1);
+        createRestaurant(3, 1, false, true);
+        createRestaurant(10, 4, true, false);
+        createRestaurant(5, 2, false, false);
+        createRestaurant(12, 3, true, true);
+    }
 
-        RestaurantEntity restaurant2 = new RestaurantEntity();
-        restaurant2.setFiliale(false);
-        restaurant2.setServiceEnCours(true);
-        saveRestaurant(restaurant2);
+    @Transactional
+    public void createRestaurant(int tables, int serveurs, boolean isFiliale, boolean isServiceEnCours) {
+        Restaurant restaurant = new RestaurantBuilder()
+                .withTables(tables)
+                .withServeurs(serveurs)
+                .withServiceStarted()
+                .withFilialeStatus(isFiliale)
+                .build();
+        RestaurantEntity eRestaurant = saveRestaurant(buildRestaurantEntity(restaurant));
+        addServeurs(eRestaurant, restaurant.getServeurs());
+        addTables(eRestaurant, restaurant.getTables());
+    }
 
-        RestaurantEntity restaurant3 = new RestaurantEntity();
-        restaurant3.setFiliale(false);
-        restaurant3.setServiceEnCours(false);
-        saveRestaurant(restaurant3);
+    @Transactional
+    public void addServeurs(RestaurantEntity restaurant, List<Serveur> serveurs) {
+        for (Serveur serveur : serveurs) {
+            ServeurEntity eServeur = apiServeurService.buildServeurEntity(serveur);
+            eServeur.setRestaurant(restaurant);
+            apiServeurService.saveServeur(eServeur);
+        }
+    }
+
+    @Transactional
+    public void addTables(RestaurantEntity restaurant, List<Table> tables) {
+        for (Table table : tables) {
+            TableEntity eTable = apiTableService.buildTableEntity(table);
+            eTable.setRestaurant(restaurant);
+            apiTableService.saveTable(eTable);
+        }
+    }
+
+    public Iterable<TableEntity> getTablesRestaurant(int restauId) {
+        Optional<RestaurantEntity> restaurant = getRestaurantById((long) restauId);
+        if (restaurant.isPresent()) {
+            return restaurant.get().getTables();
+        }
+        return null;
+    }
+
+    public Iterable<ServeurEntity> getServeursRestaurant(int restauId) {
+        Optional<RestaurantEntity> restaurant = getRestaurantById((long) restauId);
+        if (restaurant.isPresent()) {
+            return restaurant.get().getServeurs();
+        }
+        return null;
     }
 }

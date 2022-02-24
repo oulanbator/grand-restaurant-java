@@ -8,9 +8,9 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 
-import epsi.tdd.grandrestaurant.builders.RestaurantBuilder;
-import epsi.tdd.grandrestaurant.builders.ServeurBuilder;
-import epsi.tdd.grandrestaurant.builders.TableBuilder;
+import epsi.tdd.grandrestaurant.services.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.services.builders.ServeurBuilder;
+import epsi.tdd.grandrestaurant.services.builders.TableBuilder;
 import org.junit.jupiter.api.Test;
 
 public class CommandeTest {
