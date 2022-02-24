@@ -8,6 +8,7 @@ import epsi.tdd.grandrestaurant.services.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,7 @@ public class ApiTableService {
     @Autowired
     private ApiServeurService apiServeurService;
 
+    @Transactional
     public TableEntity buildTableEntity(Table table) {
         TableEntity eTable = new TableEntity();
         eTable.setId(table.getId());
@@ -41,6 +43,7 @@ public class ApiTableService {
         return tableRepository.findAll();
     }
 
+    @Transactional
     public TableEntity saveTable(TableEntity table) {
         return this.tableRepository.save(table);
     }

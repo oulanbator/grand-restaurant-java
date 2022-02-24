@@ -9,6 +9,7 @@ import epsi.tdd.grandrestaurant.services.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,7 @@ public class ApiServeurService {
     @Autowired
     private ApiRestaurantService apiRestaurantService;
 
+    @Transactional
     public ServeurEntity buildServeurEntity(IServeur serveur) {
         ServeurEntity eServeur = new ServeurEntity();
         eServeur.setMaitreHotel(serveur.isMaitreHotel());
@@ -43,6 +45,7 @@ public class ApiServeurService {
         return serveurRepository.findAll();
     }
 
+    @Transactional
     public ServeurEntity saveServeur(ServeurEntity serveur) {
         return serveurRepository.save(serveur);
     }

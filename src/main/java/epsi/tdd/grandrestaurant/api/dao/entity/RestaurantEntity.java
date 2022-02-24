@@ -17,7 +17,7 @@ public class RestaurantEntity {
     private List<ServeurEntity> serveurs = new ArrayList<>();
 
     private boolean serviceEnCours = false;
-    private boolean isFiliale;
+    private boolean isFiliale = false;
 
     public RestaurantEntity() {
     }
@@ -69,5 +69,4 @@ public class RestaurantEntity {
     public void setFiliale(boolean filiale) {
         isFiliale = filiale;
     }
-
 }

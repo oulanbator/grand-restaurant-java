@@ -10,6 +10,7 @@ import epsi.tdd.grandrestaurant.services.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,7 @@ public class ApiRestaurantService {
     @Autowired
     private ApiTableService apiTableService;
 
+    @Transactional
     public RestaurantEntity buildRestaurantEntity(Restaurant restaurant) {
         RestaurantEntity eRestaurant = new RestaurantEntity();
         eRestaurant.setFiliale(restaurant.isFiliale());
@@ -58,7 +60,25 @@ public class ApiRestaurantService {
         return restaurantRepository.findAll();
     }
 
+    @Transactional
     public RestaurantEntity saveRestaurant(RestaurantEntity restaurant) {
         return this.restaurantRepository.save(restaurant);
+    }
+
+    public void createRestaurantPool() {
+        RestaurantEntity restaurant1 = new RestaurantEntity();
+        restaurant1.setFiliale(true);
+        restaurant1.setServiceEnCours(false);
+        saveRestaurant(restaurant1);
+
+        RestaurantEntity restaurant2 = new RestaurantEntity();
+        restaurant2.setFiliale(false);
+        restaurant2.setServiceEnCours(true);
+        saveRestaurant(restaurant2);
+
+        RestaurantEntity restaurant3 = new RestaurantEntity();
+        restaurant3.setFiliale(false);
+        restaurant3.setServiceEnCours(false);
+        saveRestaurant(restaurant3);
     }
 }

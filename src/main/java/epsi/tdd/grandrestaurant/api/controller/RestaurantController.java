@@ -29,6 +29,12 @@ public class RestaurantController {
         return apiRestaurantService.getAllRestaurants();
     }
 
+    @GetMapping("create-restaurants")
+    public String createRestaurants() {
+        apiRestaurantService.createRestaurantPool();
+        return "Succès !";
+    }
+
     @GetMapping("tables")
     public Iterable<TableEntity> getTables() {
         return apiTableService.getAllTables();
