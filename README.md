@@ -126,6 +126,15 @@ En effet, la structure des objets a été crée autour des tests et a complexifi
 Il y a d'autres inconvénients comme le temps nécessaire à la mise en place d'une BDD, sa configuration, les données.
 On se rend compte aussi que la vitesse d'execution diminue avec toutes les opérations qui s'enclenchent.
 
+### Route pour l'API :
+
+http://localhost:8080/create-restaurants
+http://localhost:8080/serveurs
+http://localhost:8080/tables
+http://localhost:8080/restaurants
+http://localhost:8080/restaurant/serveurs?restauId=<id>
+http://localhost:8080/restaurant/tables?restauId=<id>
+
 ## ITERATION 4
 
 ### Consigne :
