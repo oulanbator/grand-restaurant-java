@@ -24,13 +24,6 @@ public class ApiRestaurantService {
     @Autowired
     private ApiTableService apiTableService;
 
-    public RestaurantEntity buildRestaurantEntity(Restaurant restaurant) {
-        RestaurantEntity eRestaurant = new RestaurantEntity();
-        eRestaurant.setFiliale(restaurant.isFiliale());
-        eRestaurant.setServiceEnCours(restaurant.isServiceEnCours());
-        return eRestaurant;
-    }
-
     public Optional<RestaurantEntity> getRestaurantById(Long id) {
         return restaurantRepository.findById(id);
     }
@@ -42,6 +35,13 @@ public class ApiRestaurantService {
     @Transactional
     public RestaurantEntity saveRestaurant(RestaurantEntity restaurant) {
         return this.restaurantRepository.save(restaurant);
+    }
+
+    public RestaurantEntity buildRestaurantEntity(Restaurant restaurant) {
+        RestaurantEntity eRestaurant = new RestaurantEntity();
+        eRestaurant.setFiliale(restaurant.isFiliale());
+        eRestaurant.setServiceEnCours(restaurant.isServiceEnCours());
+        return eRestaurant;
     }
 
     @Transactional
