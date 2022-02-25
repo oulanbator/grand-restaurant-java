@@ -1,40 +1,40 @@
 # Compte-rendu :
 
+### Setup
+Afin d'éxécuter script l'environnement devra avoir installé :
+* JDK 11
+* Maven
+* Les deux disponibles dans le PATH
+* Un terminal bash pour exécuter le script
+
+Le script à lancer est le fichier ./script.sh
+Le ./killscript.sh devait permettre de kill l'API après utilisation mais semble ne pas fonctionner sur tous les systèmes.
+
 ### Concernant le repo git
-Nous avons souvent travaillé en pair programming et de ce fait, la contribution de chacun n'est pas nécessairement bien
-représentée par le nombre de commit et de ligne qui ont été push.
+Nous avons souvent travaillé en pair programming et de ce fait, la contribution de chacun n'est pas nécessairement bien représentée par le nombre de commit et de ligne qui ont été push.
 
 ### Itération 1 & 2
 Nous avons commencé les test unitaires avec le framework Junit. Les tests que nous avons effectué dans des branches
 séparées (noel & quentin) nous ont poussé à choisir plutôt AspectJ comme framework d'assertion, car sa syntaxe nous a
-semblé plus claire. D'autre part, la dépendance "javalite-common" pour l'utilisation de JSpec contient elle-même des
-dépendances avec des vulnérabilités.
+semblé plus claire. D'autre part, la dépendance "javalite-common" pour l'utilisation de JSpec contient elle-même des dépendances avec des vulnérabilités.
 Certains doubles de test (Dummy) que nous avons créé ont posé des difficultés car nous n'étions pas réellement dans des
 tests unitaires mais des test fonctionnels et l'utilisation de Dummy n'était pas appropriée.
 Nous avons malgré tout gardé les classes et les interfaces associées.
-Nous n'avons pas utilisé le pattern Generator qui ne nous a pas semblé nécessaire, en revanche l'utlisation des Buidlers
-pour plusieurs de nos classes nous a permis de gagner en lisibilité.
+Nous n'avons pas utilisé le pattern Generator qui ne nous a pas semblé nécessaire, en revanche l'utlisation des Buidlers pour plusieurs de nos tests nous a permis de gagner en lisibilité.
 
 ### Itération 3
 Nous avons eu beaucoup de difficultés à effectuer les tests d'intégrations.
-En cause, la conception globale de notre projet, géré en TDD, qui nous a fait prendre conscience
-qu'une expérience certaine est demandée pour une telle démarche.
-En effet, la structure des objets a été crée autour des use cases. Il en résulte des objets qui mélangent
-les différentes couches de l'applicaiton (modèle et service notamment) et cela a complexifié le branchement
-à une API.
-L'utilisation d framework spring/hibernate du moins, implique de mapper les tables de la BDD dans des objets
-de type "Entity", la création de relations (One-To-One et One-to-Many) là où nous n'avions utilisé que des collections
-dans nos objets initiaux.
+En cause, la conception globale de notre projet, géré en TDD, qui nous a fait prendre conscience qu'une certaine expérience est nécessaire pour une telle démarche.
+En effet, la structure des objets a été crée autour des use cases. Il en résulte des objets qui mélangent les différentes couches de l'application (modèle et service notamment) et cela a complexifié le branchement à une API.
+L'utilisation d framework spring/hibernate du moins, implique de mapper les tables de la BDD dans des objets de type "Entity", la création de relations (One-To-One et One-to-Many) là où nous n'avions utilisé que des collections dans nos objets initiaux.
 Il y a d'autres inconvénients comme le temps nécessaire à la mise en place d'une BDD, sa configuration, les données.
 On se rend compte aussi que la vitesse d'execution diminue avec toutes les opérations qui s'enclenchent.
-Enfin nous avons compris la différente en théorie entre tests d'intégration et tests systèmes, mais nous
-ne sommes pas très au clair sur la manière de les implémenter. Dans le cadre du framework Spring l'accès à la BDD
-demande que l'application se lance et nous avons donc fait des tests qui l'utilisent dans un cas comme dans l'autre.
+Enfin nous avons compris la différence théorique entre tests d'intégration et tests systèmes, mais nous ne sommes pas très au clair sur la manière de les implémenter. Dans le cadre du framework Spring l'accès à la BDD demande que l'application se lance et nous aurions donc dû faire des tests qui l'utilisent dans un cas comme dans l'autre.
 
 ### Itération 4
-L'éciture du script bash en soit n'a pas posé de problème.
-Nous avons eu les difficultés évoquées ci-dessus concernant la mise en place d'une API et le "branchement" avec le
-code déjà en place. Cela aurait sûrement demandé beaucoup de temps et d'efforts pour rendre la conception de l'application
+L'éciture du script bash en soit n'a pas posé beaucoup de problème.
+Nous avons eu les difficultés évoquées ci-dessus concernant la mise en place d'une API et le "branchement" avec le code déjà en place. 
+Cela aurait sûrement demandé beaucoup de temps et d'efforts pour rendre la conception de l'application
 plus claire et robuste.
 
 ### Conclusion

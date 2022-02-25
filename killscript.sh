@@ -2,8 +2,8 @@
 # -*- ENCODING: UTF-8 -*-
 
 ### RECHERCHE DU PROCESS ###
-echo "Recherche du processus en localhost:8080"
-process=$(netstat -ano | grep "0.0.0.0:8080")
+echo "Recherche du processus en localhost:8888"
+process=$(netstat -ano | grep "0.0.0.0:8888")
 echo "Processus trouvé :"
 echo "$process"
 

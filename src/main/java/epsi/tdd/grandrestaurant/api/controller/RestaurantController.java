@@ -47,7 +47,7 @@ public class RestaurantController {
     @GetMapping("create-restaurants")
     public String createRestaurants() {
         apiRestaurantService.createRestaurantPool();
-        return "Pool de restaurants créés";
+        return "API RESPONSE (200) : Pool de restaurants créés";
     }
 
     @GetMapping("create-restaurant")
@@ -57,6 +57,6 @@ public class RestaurantController {
             @RequestParam boolean isFiliale,
             @RequestParam boolean serviceEnCours) {
         apiRestaurantService.createRestaurant(tables, serveurs, isFiliale, serviceEnCours);
-        return "Restaurant créé !";
+        return "API RESPONSE (200) Restaurant créé !";
     }
 }

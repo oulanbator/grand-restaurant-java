@@ -2,12 +2,16 @@
 # -*- ENCODING: UTF-8 -*-
 
 ### CLONE ###
+echo "##################################################"
 echo "Clonage du dépôt Git.."
+echo "##################################################"
 git clone https://github.com/oulanbator/grand-restaurant-java.git
 cd grand-restaurant-java
 
 ### BRANCH ###
+echo "##################################################"
 echo "Choix de la branche.."
+echo "##################################################"
 git branch -a
 choixValide=false
 while [ $choixValide = false ]
@@ -31,11 +35,15 @@ do
 done
 
 ### BUILD & TESTS ###
+echo "##################################################"
 echo "Build et tests du projet.."
+echo "##################################################"
 mvn clean package 
 
 ### RESULTS ###
+echo "##################################################"
 echo "Analyse des résultats de tests.."
+echo "##################################################"
 cd target/surefire-reports
 # Set un trigger pour le déploiement à true
 deployApp=true
@@ -70,15 +78,62 @@ EOT
 
 ### DELOY APP ###
 if [ $deployApp = "true" ]; then
+	serverport=8888
+	portinuse=$(netstat -ano | grep $serverport)
+	if [ "$portinuse" != '' ]; then
+		echo "Le port $serverport semble déjà utilisé. Choisissez le port sur lequel lancer l'API :"
+		read input
+		serverport=$input
+	fi
 	cd ..
-	java -jar grand-restaurant-0.0.1-SNAPSHOT.jar --server.port=8888 &
-	echo ">>> L'API tourne en background sur localhost:8888 !!"
+	echo "##################################################"
+	echo "Déploiment de l'API (sur le port $serverport)"
+	echo "##################################################"
+	nohup java -jar grand-restaurant-0.0.1-SNAPSHOT.jar --server.port=$serverport &
+	echo "Sleep quelques secondes en attendant que l'api se lance..."
+
+	deployed=false
+	while [ $deployed = false ]
+	do
+		sleep 1
+		portinuse=$(netstat -ano | grep $serverport)
+		if [ "$portinuse" != '' ]; then
+			deployed=true
+		fi
+	done
+
+	echo "Déploiement terminé"
+
+	echo "##################################################"
+	echo "CURL de l'API"
+	echo "##################################################"
+	echo "Création d'un pool de restaurants :"
+	echo "curl http://localhost:8888/create-restaurants"
+	curl -i -H "Accept: application/json" "localhost:8888/create-restaurants"
+	echo " "
+	echo " ************************************************** "
+	echo " "
+	echo "Requête des restaurants de la BDD :"
+	echo "curl http://localhost:8888/restaurants"
+	curl -i -H "Accept: application/json" "localhost:8888/restaurants"
+	echo " "
+	echo " ************************************************** "
+	echo " "
+
+	echo "##################################################"
+	echo "Script terminé"
+	echo "##################################################"
+	echo ">>> L'API continue à tourner en background sur localhost:$serverport !!" 
+	echo "Pensez à la kill avec les commandes PowerShell :"
+	echo "netstat -ano | findstr $serverport"
+	echo "taskkill  /F  /PID <APP_PID>"
+
 else
-	echo "Don't Deploy"
+	echo "##################################################"
+	echo "ERREURS DETECTEES : L'API ne sera pas déployée"
+	echo "##################################################"
 fi
-
-### CURL ###
-# curl une route de l'api
-
-sleep 10
+echo " "
+echo ">>> Appuyez sur ENTREE pour quitter"
+read quitter
 
