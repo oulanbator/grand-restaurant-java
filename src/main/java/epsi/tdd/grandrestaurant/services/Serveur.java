@@ -5,7 +5,7 @@ import epsi.tdd.grandrestaurant.model.TypeCommande;
 
 public class Serveur implements IServeur {
     private Long id;
-    private IRestaurant restaurant;
+    private Restaurant restaurant;
     private boolean isMaitreHotel = false;
     private double chiffreAffaires;
 
@@ -59,7 +59,7 @@ public class Serveur implements IServeur {
         this.isMaitreHotel = isMaitreHotel;
     }
 
-    public void setRestaurant(IRestaurant restaurant) {
+    public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
 

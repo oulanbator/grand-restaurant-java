@@ -8,6 +8,8 @@ import epsi.tdd.grandrestaurant.services.Restaurant;
 import epsi.tdd.grandrestaurant.services.Serveur;
 import epsi.tdd.grandrestaurant.services.Table;
 import epsi.tdd.grandrestaurant.services.builders.RestaurantBuilder;
+import epsi.tdd.grandrestaurant.services.mapper.CycleAvoidingMappingContext;
+import epsi.tdd.grandrestaurant.services.mapper.MapperRestaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class ApiRestaurantService {
     @Autowired
     private ApiTableService apiTableService;
 
+
     public Optional<RestaurantEntity> getRestaurantById(Long id) {
         return restaurantRepository.findById(id);
     }
@@ -37,11 +40,12 @@ public class ApiRestaurantService {
         return this.restaurantRepository.save(restaurant);
     }
 
-    public RestaurantEntity buildRestaurantEntity(Restaurant restaurant) {
-        RestaurantEntity eRestaurant = new RestaurantEntity();
-        eRestaurant.setFiliale(restaurant.isFiliale());
-        eRestaurant.setServiceEnCours(restaurant.isServiceEnCours());
-        return eRestaurant;
+    public RestaurantEntity mapRestaurantToEntity(Restaurant restaurant) {
+        return MapperRestaurant.INSTANCE.restaurantToEntity(restaurant, new CycleAvoidingMappingContext());
+    }
+
+    public Restaurant mapEntityToRestaurant(RestaurantEntity restaurant) {
+        return MapperRestaurant.INSTANCE.entityToRestaurant(restaurant, new CycleAvoidingMappingContext());
     }
 
     @Transactional
@@ -60,7 +64,8 @@ public class ApiRestaurantService {
                 .withServiceStarted()
                 .withFilialeStatus(isFiliale)
                 .build();
-        RestaurantEntity eRestaurant = saveRestaurant(buildRestaurantEntity(restaurant));
+        RestaurantEntity eRestaurant = mapRestaurantToEntity(restaurant);
+        saveRestaurant(eRestaurant);
         addServeurs(eRestaurant, restaurant.getServeurs());
         addTables(eRestaurant, restaurant.getTables());
     }
@@ -68,7 +73,7 @@ public class ApiRestaurantService {
     @Transactional
     public void addServeurs(RestaurantEntity restaurant, List<Serveur> serveurs) {
         for (Serveur serveur : serveurs) {
-            ServeurEntity eServeur = apiServeurService.buildServeurEntity(serveur);
+            ServeurEntity eServeur = apiServeurService.mapServeurToEntity(serveur);
             eServeur.setRestaurant(restaurant);
             apiServeurService.saveServeur(eServeur);
         }
@@ -77,7 +82,7 @@ public class ApiRestaurantService {
     @Transactional
     public void addTables(RestaurantEntity restaurant, List<Table> tables) {
         for (Table table : tables) {
-            TableEntity eTable = apiTableService.buildTableEntity(table);
+            TableEntity eTable = apiTableService.mapTableToEntity(table);
             eTable.setRestaurant(restaurant);
             apiTableService.saveTable(eTable);
         }
