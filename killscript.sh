@@ -15,7 +15,7 @@ echo ">>> Confirmer l'arrêt du processus (Y)"
 ### CONFIRM KILL ###
 read input
 if [ "$input" == 'Y' ]; then
-  echo "kill process"
+  echo kill -9 $5
 else
   echo "don't kill"
 fi

@@ -70,7 +70,9 @@ EOT
 
 ### DELOY APP ###
 if [ $deployApp = "true" ]; then
-	echo "Deploy"
+	cd ..
+	java -jar grand-restaurant-0.0.1-SNAPSHOT.jar --server.port=8888 &
+	echo ">>> L'API tourne en background sur localhost:8888 !!"
 else
 	echo "Don't Deploy"
 fi
