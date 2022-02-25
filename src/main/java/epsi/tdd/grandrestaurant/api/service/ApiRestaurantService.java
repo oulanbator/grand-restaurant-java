@@ -57,7 +57,7 @@ public class ApiRestaurantService {
     }
 
     @Transactional
-    public void createRestaurant(int tables, int serveurs, boolean isFiliale, boolean isServiceEnCours) {
+    public Restaurant createRestaurant(int tables, int serveurs, boolean isFiliale, boolean isServiceEnCours) {
         Restaurant restaurant = new RestaurantBuilder()
                 .withTables(tables)
                 .withServeurs(serveurs)
@@ -68,6 +68,7 @@ public class ApiRestaurantService {
         saveRestaurant(eRestaurant);
         addServeurs(eRestaurant, restaurant.getServeurs());
         addTables(eRestaurant, restaurant.getTables());
+        return mapEntityToRestaurant(eRestaurant);
     }
 
     @Transactional

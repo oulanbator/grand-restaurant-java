@@ -1,11 +1,21 @@
 package epsi.tdd.grandrestaurant.services;
 
+import epsi.tdd.grandrestaurant.api.dao.entity.RestaurantEntity;
+import epsi.tdd.grandrestaurant.api.service.ApiRestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class Restaurant implements IRestaurant {
+    @Autowired
+    private ApiRestaurantService apiRestaurantService;
+
     private Long id;
     private Serveur maitreHotel;
     private List<Table> tables = new ArrayList<>();
@@ -40,6 +50,7 @@ public class Restaurant implements IRestaurant {
         Serveur serveur = new Serveur();
         serveur.setMaitreHotel(true);
         serveur.setRestaurant(this);
+        serveurs.add(serveur);
         this.maitreHotel = serveur;
     }
 
@@ -60,6 +71,12 @@ public class Restaurant implements IRestaurant {
             }
         }
         serviceEnCours = true;
+    }
+
+    public void startService(boolean integration) {
+        startService();
+//        RestaurantEntity eRestaurant = apiRestaurantService.mapRestaurantToEntity(this);
+//        apiRestaurantService.saveRestaurant(eRestaurant);
     }
 
     @Override

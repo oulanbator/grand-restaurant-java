@@ -1,5 +1,9 @@
 # Compte-rendu :
 
+### Concernant le repo git
+Nous avons souvent travaillé en pair programming et de ce fait, la contribution de chacun n'est pas nécessairement bien
+représentée par le nombre de commit et de ligne qui ont été push.
+
 ### Itération 1 & 2
 Nous avons commencé les test unitaires avec le framework Junit. Les tests que nous avons effectué dans des branches
 séparées (noel & quentin) nous ont poussé à choisir plutôt AspectJ comme framework d'assertion, car sa syntaxe nous a

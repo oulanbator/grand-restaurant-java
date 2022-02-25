@@ -38,7 +38,9 @@ public class FranchiseTest {
                 .build();
 
         for (Serveur serveur : restaurant.getServeurs()) {
-            serveur.prendreCommande(commande, mock(Table.class));
+            if (!serveur.isMaitreHotel()) {
+                serveur.prendreCommande(commande, mock(Table.class));
+            }
         }
         // ALORS le chiffre d'affaires de la franchise est X * Y
         double result = franchise.getChiffreAffaire();
@@ -81,7 +83,9 @@ public class FranchiseTest {
                 
         franchise.getRestaurants().forEach(restaurant -> {
             restaurant.getServeurs().forEach(serveur -> {
-                serveur.prendreCommande(commande, mock(Table.class));
+                if (!serveur.isMaitreHotel()) {
+                    serveur.prendreCommande(commande, mock(Table.class));
+                }
             });
         });
 

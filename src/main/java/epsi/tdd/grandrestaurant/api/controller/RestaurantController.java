@@ -30,12 +30,6 @@ public class RestaurantController {
         return apiRestaurantService.getAllRestaurants();
     }
 
-    @GetMapping("create-restaurants")
-    public String createRestaurants() {
-        apiRestaurantService.createRestaurantPool();
-        return "Succès !";
-    }
-
     @GetMapping("tables")
     public Iterable<TableEntity> getTables() {
         return apiTableService.getAllTables();
@@ -48,5 +42,21 @@ public class RestaurantController {
     @GetMapping("restaurant/serveurs")
     public Iterable<ServeurEntity> getServeursRestaurant(@RequestParam int restauId) {
         return apiRestaurantService.getServeursRestaurant(restauId);
+    }
+
+    @GetMapping("create-restaurants")
+    public String createRestaurants() {
+        apiRestaurantService.createRestaurantPool();
+        return "Pool de restaurants créés";
+    }
+
+    @GetMapping("create-restaurant")
+    public String createRestaurant(
+            @RequestParam int tables,
+            @RequestParam int serveurs,
+            @RequestParam boolean isFiliale,
+            @RequestParam boolean serviceEnCours) {
+        apiRestaurantService.createRestaurant(tables, serveurs, isFiliale, serviceEnCours);
+        return "Restaurant créé !";
     }
 }
